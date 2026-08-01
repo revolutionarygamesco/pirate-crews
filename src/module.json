@@ -1,0 +1,69 @@
+{
+  "id": "revolutionary-starter",
+  "title": "Foundry VTT Module Starter",
+  "description": "",
+  "version": "#{VERSION}#",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13"
+  },
+  "authors": [
+    {
+      "name": "Jason Godesky",
+      "email": "jason@revolutionarygames.co",
+      "github": "revolutionarygamesco"
+    }
+  ],
+  "esmodules": [
+    "scripts/module.js"
+  ],
+  "styles": [
+    "styles/module.css"
+  ],
+  "packs": [
+    {
+      "name": "macros",
+      "label": "Foundry VTT Module Starter Macros",
+      "path": "packs/macros",
+      "type": "Macro",
+      "ownership": {
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "rolltables",
+      "label": "Foundry VTT Module Starter Roll Tables",
+      "path": "packs/rolltables",
+      "type": "RollTable",
+      "ownership": {
+        "GAMEMASTER": "OWNER"
+      }
+    }
+  ],
+  "packFolders": [
+    {
+      "name": "Foundry VTT Module Starter",
+      "sorting": "a",
+      "packs": [
+        "macros",
+        "rolltables"
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "relationships": {},
+  "socket": false,
+  "url": "#{URL}#",
+  "manifest": "#{MANIFEST}#",
+  "download": "#{DOWNLOAD}#",
+  "bugs": "#{BUGS}#",
+  "changelog": "#{CHANGELOG}#",
+  "license": "#{LICENSE}#",
+  "readme": "#{README}#"
+}

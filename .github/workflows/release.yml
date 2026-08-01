@@ -1,0 +1,73 @@
+name: Release Module
+
+env:
+  project_url: "https://github.com/${{github.repository}}"
+  latest_manifest_url: "https://github.com/${{github.repository}}/releases/latest/download/module.json"
+  release_module_url: "https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.zip"
+  bugs_url: "https://github.com/${{github.repository}}/issues"
+  changelog_url: "https://github.com/${{github.repository}}/blob/main/CHANGELOG.md"
+  license_url: "https://github.com/${{github.repository}}/blob/main/LICENSE"
+  readme_url: "https://github.com/${{github.repository}}/blob/main/README.md"
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          registry-url: 'https://registry.npmjs.org'
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Module
+        run: npm run build
+
+      - name: Get version from tag
+        id: get_version
+        run: |
+          VERSION="${{ github.event.release.tag_name }}"
+          VERSION="${VERSION#v}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Version extracted: $VERSION"
+
+      - name: Update Manifest
+        id: sub_manifest_link_version
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: './dist/module.json'
+        env:
+          version: ${{ steps.get_version.outputs.version }}
+          url: ${{ env.project_url }}
+          manifest: ${{ env.latest_manifest_url }}
+          download: ${{ env.release_module_url }}
+          bugs: ${{ env.bugs_url }}
+          changelog: ${{ env.changelog_url }}
+          license: ${{ env.license_url }}
+          readme: ${{ env.readme_url }}
+
+      - name: Zip Files
+        working-directory: ./dist
+        run: zip -r ../module.zip .
+
+      - name: Update Release with Artifacts
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ./dist/module.json
+            ./module.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
