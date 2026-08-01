@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && vite build",
+    "build": "tsc -p tsconfig.build.json && vite build && npm run build:i18n",
+    "build:i18n": "node scripts/localize.js",
     "pack": "node ./scripts/pack.js",
     "complete-table": "node ./scripts/complete-table.js",
     "test": "vitest run --typecheck && npm run typecheck",
