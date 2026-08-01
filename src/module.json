@@ -1,6 +1,6 @@
 {
-  "id": "revolutionary-starter",
-  "title": "Foundry VTT Module Starter",
+  "id": "revolutionary-piratecrews",
+  "title": "Pirate Crews",
   "description": "",
   "version": "#{VERSION}#",
   "compatibility": {
@@ -20,36 +20,8 @@
   "styles": [
     "styles/module.css"
   ],
-  "packs": [
-    {
-      "name": "macros",
-      "label": "Foundry VTT Module Starter Macros",
-      "path": "packs/macros",
-      "type": "Macro",
-      "ownership": {
-        "GAMEMASTER": "OWNER"
-      }
-    },
-    {
-      "name": "rolltables",
-      "label": "Foundry VTT Module Starter Roll Tables",
-      "path": "packs/rolltables",
-      "type": "RollTable",
-      "ownership": {
-        "GAMEMASTER": "OWNER"
-      }
-    }
-  ],
-  "packFolders": [
-    {
-      "name": "Foundry VTT Module Starter",
-      "sorting": "a",
-      "packs": [
-        "macros",
-        "rolltables"
-      ]
-    }
-  ],
+  "packs": [],
+  "packFolders": [],
   "languages": [
     {
       "lang": "en",
