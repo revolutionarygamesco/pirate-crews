@@ -7,8 +7,8 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        module: resolve(__dirname, 'src/scripts/module.ts'),
-        styles: resolve(__dirname, 'src/styles/module.scss')
+        module: resolve(import.meta.dirname, 'src/scripts/module.ts'),
+        styles: resolve(import.meta.dirname, 'src/styles/module.scss')
       },
       output: {
         dir: 'dist',
@@ -40,7 +40,6 @@ export default defineConfig({
     },
     viteStaticCopy({
       targets: [
-        { src: 'src/packs', dest: '' },
         { src: 'src/lang', dest: '' }
       ]
     })
