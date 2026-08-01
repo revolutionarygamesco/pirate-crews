@@ -1,9 +1,7 @@
-const moduleName = 'Module'
-
-Hooks.on('init', () => {
-  console.log(`Initializing ${moduleName}...`)
-})
+import { MODULE_NAME } from './settings.ts'
+import registerWatchSettings from './watch/register.ts'
 
 Hooks.on('ready', () => {
-  console.log(`${moduleName} is ready`)
+  console.log(`Registering ${MODULE_NAME} settings...`)
+  registerWatchSettings()
 })

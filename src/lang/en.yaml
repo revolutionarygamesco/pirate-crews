@@ -1,4 +1,13 @@
 revolutionary-piratecrews:
+  settings:
+    watches:
+      name: Watch System
+      hint: |
+        The watch system used by your pirates. Define the name and length of
+        each of the day’s watches.
+      error: |
+        Watch configuration must be an object that adheres to this interface:
+        `{ watches: Array<{ name: string, duration: number }>, offset: number }`.
   watches:
     default:
       first: First Watch
