@@ -37,6 +37,9 @@ revolutionary-piratecrews:
       afternoon: Afternoon Watch
       dog1: First Dog Watch
       dog2: Second Dog Watch
+  watch-crews:
+    starboard: Starboard Crew
+    larboard: Larboard Crew
   officers:
     captain:
       title: Captain
