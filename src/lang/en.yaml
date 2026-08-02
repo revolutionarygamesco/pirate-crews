@@ -8,6 +8,13 @@ revolutionary-piratecrews:
       error: |
         Watch configuration must be an object that adheres to this interface:
         `{ watches: Array<{ name: string, duration: number }>, offset: number }`.
+    officers:
+      name: Officers
+      hint: |
+        What officers should new crews have to choose from?
+      error: |
+        Officer configuration must be an object that adheres to this interface:
+        `{ [key: string]: { title: string, desc: string, sans: string, shares: number } }`
   watches:
     default:
       first: First Watch
