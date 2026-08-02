@@ -17,3 +17,90 @@ revolutionary-piratecrews:
       afternoon: Afternoon Watch
       dog1: First Dog Watch
       dog2: Second Dog Watch
+  officers:
+    captain:
+      title: Captain
+      desc: |
+        Under normal circumstances, the captain is co-equal with the
+        quartermaster, but in action his word is law. The captain is
+        responsible for hunting prey and leading attacks. It’s the captain’s
+        name that the crew will come to be known and feared by, but that legend
+        is an asset created and owned collectively by the crew, not the captain
+        himself.
+      sans: |
+        A ship isn’t ready to sail without a captain.
+    quartermaster:
+      title: Quartermaster
+      desc: |
+        Under normal circumstances, the quartermaster is co-equal with the
+        captain. He is elected by the crew to represent their interests and
+        check the captain’s power. He’s in charge of the company’s finances,
+        assets, and resources, for enforcing the articles of agreement, and
+        paying out shares. He runs auctions for those items that are not easily
+        divided and is responsible for discipline and mediating disputes among
+        the crew.
+      sans: |
+        A ship isn’t ready to sail without a quartermaster.
+    master:
+      title: Sailing Master
+      desc: |
+        The sailing master — often shortened to just “master” — is one of the
+        leading officers on a pirate ship, leading one of the watch crews and
+        even taking command when the captain or quartermaster are unavailable.
+        He takes primary responsibility for actually sailing the ship,
+        including navigation, maintaining logs on the ship’s position, speed,
+        ocean depth, winds, etc., as well as maintaining the sails, rigging,
+        and general seaworthiness of the vessel.
+      sans: |
+        A ship isn’t ready to sail without a sailing master.
+    bosun:
+      title: Bosun
+      desc: |
+        The boatswain or bosun is a minor officer responsible for the rigging
+        and cordage aboard the vessel. They oversee shift changes at the end of
+        each watch. Discipline often falls to the bosun, making him the most
+        feared man on the crew. The bosun’s badge of office is a silver whistle
+        worn around the neck. He reports to the quartermaster.
+      sans: |
+        On a ship without a bosun the quartermaster assumes these duties.
+    gunner:
+      title: Master Gunner
+      desc: |
+        The master gunner is a petty officer responsible for the cannons aboard
+        the ship. Gunners required extensive education, including arithmetic,
+        geometry, the names of every piece of ordnance and their parts, and how
+        to detect the flaws and qualities of a gun. The master gunner is the
+        only member of the crew besides the captain and quartermaster entrusted
+        with a key to the powder magazine.
+      sans: |
+        On a ship without a master gunner, the quartermaster assumes these
+        duties. Such a ship may struggle to keep its cannons in proper fighting
+        condition or bring them to bear with full effectiveness in a fight.
+    carpenter:
+      title: Master Carpenter
+      desc: |
+        The master carpenter is responsible for repairs to the hull, masts, and
+        other wooden parts of the ship, including keeping leaks to an
+        acceptable minimum. During battle, they are usually below deck to plug
+        holes from cannon balls. The master carpenter is responsible for ship
+        upgrades and modifications and directs careening.
+      sans: |
+        A crew without a carpenter will be challenged to repair damage to
+        their ship.
+    surgeon:
+      title: Surgeon
+      desc: |
+        Doctors at this time follow a theory of medicine based on miasmas and
+        humors, but few pirate ship’s surgeons have any formal medical
+        training. They serve as barber, dentist, and field medic, and often
+        receive higher pay and better accommodations for their skills. They’re
+        responsible for the maintenance of the tools of their trade and are
+        expected to keep their medicine chest well-stocked.
+      sans: |
+        Crew members in need of medical aid on a ship without a surgeon will
+        have to make do with what the cook or the carpenter can provide.
+
+      
+        
+   
+
