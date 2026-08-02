@@ -60,13 +60,13 @@ export const createOfficers = (
       title: t('carpenter.title'),
       desc: t('carpenter.desc'),
       sans: t('carpenter.sans'),
-      shares: 1.5
+      shares: 1.25
     },
     surgeon: {
       title: t('surgeon.title'),
       desc: t('surgeon.desc'),
       sans: t('surgeon.sans'),
-      shares: 1.5
+      shares: 1.25
     },
     ...fullOverrides
   }
