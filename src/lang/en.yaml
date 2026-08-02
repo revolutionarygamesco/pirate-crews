@@ -15,6 +15,19 @@ revolutionary-piratecrews:
       error: |
         Officer configuration must be an object that adheres to this interface:
         `{ [key: string]: { title: string, desc: string, sans: string, shares: number } }`
+  provisions:
+    food:
+      label: Vittles
+      unit: ration
+      units: rations
+    water:
+      label: Fresh water
+      unit: ration
+      units: rations
+    rum:
+      label: Rum
+      unit: ration
+      units: rations
   watches:
     default:
       first: First Watch
