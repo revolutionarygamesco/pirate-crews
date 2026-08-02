@@ -122,6 +122,96 @@ revolutionary-piratecrews:
       sans: |
         Crew members in need of medical aid on a ship without a surgeon will
         have to make do with what the cook or the carpenter can provide.
+  articles:
+    shares:
+      initial: |
+        To {officers} shall be paid {amount} Shares of each Prize
+      following: |
+        to {officers}, {amount}
+      final: |
+        and to each other member of this Company, one Share. Items of unique
+        value which cannot be properly divided shall be auctioned to the
+        members of the Company by the Quartermaster, or awarded as the
+        Captain and the Majority of the Company shall see fit.
+      conj: and
+      p05: one twentieth
+      p10: one tenth
+      p15: three twentieths
+      p20: one fifth
+      p25: one quarter
+      p30: three tenths
+      p35: one third
+      p40: two fifths
+      p45: nine twentieths
+      p50: one half
+      p55: eleven twentieths
+      p60: three fifths
+      p65: two thirds
+      p70: seven tenths
+      p75: three quarters
+      p80: four fifths
+      p85: seventeen twentieths
+      p90: nine tenths
+      p95: nineteen twentieths
+      1: one
+      2: two
+      3: three
+      4: four
+      5: five
+      6: six
+      7: seven
+      8: eight
+      9: nine
+      10: ten
+      11: eleven
+      12: twelve
+      13: thirteen
+      14: fourteen
+      15: fifteen
+      16: sixteen
+      17: seventeen
+      18: eighteen
+      19: nineteen
+      20: twenty
+    common:
+      equality: |
+        Every Member of this Company Shall have a Vote in matters of Moment, as
+        well as equal title to fresh provisions or strong liquors, at any time
+        seized, and may use them at pleasure, unless a scarcity makes it
+        necessary for the good of all to vote a retrenchment.
+      theft: |
+        Any Member of this Company who shall keep any Secret from the Company,
+        or steal any Thing in the Company, or game, to the Value of a Piece of
+        Eight, shall be marooned with one Bottle of Powder, one Bottle of
+        Water, one small Arm, and Shot.
+      readiness: |
+        Every Member of this Company shall keep his Piece, Pistols, Cutlasses,
+        and other Arms clean and fit for Service. He that shall be guilty of
+        Drunkenness in time of Engagement shall suffer Moses’ Law (that is, 40
+        Stripes lacking one) on the bare Back.
+      injury: |
+        Any Member of this Company that shall lose a Joint in time of an
+        Engagement shall have 400 Pieces of Eight; if a Limb, 800; if an Eye or
+        Finger, 100.
+      fire: |
+        Anyone that shall snap his Arms, or smoke Tobacco in the Hold, without
+        a Cap to his Pipe, or carry a Candle lighted without a Lantern, shall
+        suffer Moses’ Law (that is, 40 Stripes lacking one) on the bare Back.
+      dueling: |
+        No one shall strike another while Aboard the Vessel. Such quarrels as
+        must find Satisfaction by Sword or Pistol shall be settled on Shore at
+        such time as Fortune allows.
+      gambling: |
+        Any Member of this Company who shall play at Cards or Dice for Money 
+        hall suffer such punishment as the Captain and the Majority of the
+        Company shall deem fit.
+      cowardice: |
+        Any Member of this Company that shall be found Guilty of Cowardice, or
+        desert the Ship or their Quarters in Battle, shall suffer such
+        punishment as the Captain and the Majority of the Company shall
+        deem fit.
+
+
 
       
         
