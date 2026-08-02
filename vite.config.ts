@@ -1,11 +1,10 @@
 import { defineConfig } from 'vitest/config'
 import { resolve } from 'path'
 import { copyFileSync } from 'fs'
-import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig({
   build: {
-    rollupOptions: {
+    rolldownOptions: {
       input: {
         module: resolve(import.meta.dirname, 'src/scripts/module.ts'),
         styles: resolve(import.meta.dirname, 'src/styles/module.scss')
@@ -37,12 +36,7 @@ export default defineConfig({
           'dist/module.json'
         )
       }
-    },
-    viteStaticCopy({
-      targets: [
-        { src: 'src/lang', dest: '' }
-      ]
-    })
+    }
   ],
   test: {
     globals: true,
