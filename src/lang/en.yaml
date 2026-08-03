@@ -15,6 +15,15 @@ revolutionary-piratecrews:
       error: |
         Officer configuration must be an object that adheres to this interface:
         `{ [key: string]: { title: string, desc: string, sans: string, shares: number } }`
+    provisions:
+      name: Provisions
+      hint: |
+        What sort of provisions do you want to track? `unit` is how you want to
+        measure that provision; `units` is the plural form. `consumption` is
+        how much each member of the crew consumes each day.
+      error: |
+        Provision configuration must be an object that adheres to this interface:
+        `{ [key: string]: { label: string, unit: string, units: string, consumption: number } }`
   provisions:
     food:
       label: Vittles
