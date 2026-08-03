@@ -18,9 +18,9 @@ revolutionary-piratecrews:
     provisions:
       name: Provisions
       hint: |
-        What sort of provisions do you want to track? `unit` is how you want to
-        measure that provision; `units` is the plural form. `consumption` is
-        how much each member of the crew consumes each day.
+        What sort of provisions do you want to track? Unit is how you want to
+        measure that provision; units is the plural form. Consumption is how
+        much each member of the crew consumes each day.
       error: |
         Provision configuration must be an object that adheres to this interface:
         `{ [key: string]: { label: string, unit: string, units: string, consumption: number } }`
