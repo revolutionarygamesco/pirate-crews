@@ -1,3 +1,7 @@
+TYPES:
+  Actor:
+    revolutionary-piratecrews:
+      crew: Pirate Crew
 revolutionary-piratecrews:
   settings:
     watches:
