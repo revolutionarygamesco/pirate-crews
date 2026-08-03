@@ -124,15 +124,19 @@ revolutionary-piratecrews:
         have to make do with what the cook or the carpenter can provide.
   articles:
     shares:
+      equal: |
+        To each Member of this Company shall be paid an equal share of
+        each Prize.
       initial: |
-        To {officers} shall be paid {amount} Shares of each Prize
+        To the {officers} shall be paid {amount} Shares of each Prize
       following: |
-        to {officers}, {amount}
+        to the {officers}, {amount}
       final: |
-        and to each other member of this Company, one Share. Items of unique
-        value which cannot be properly divided shall be auctioned to the
-        members of the Company by the Quartermaster, or awarded as the
-        Captain and the Majority of the Company shall see fit.
+        and to each other member of this Company, one Share.
+      auction: |
+        Items of unique value which cannot be properly divided shall be
+        auctioned to the members of the Company by the Quartermaster, or
+        awarded as the Captain and the Majority of the Company shall see fit.
       conj: and
       p05: one twentieth
       p10: one tenth
