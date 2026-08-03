@@ -4,6 +4,7 @@ import CrewModel from './crew/schema.ts'
 import registerOfficerSettings from './officers/register.ts'
 import registerProvisions from './provisions/register.ts'
 import registerWatchSettings from './watch/register.ts'
+import registerCrewHooks from './crew/hooks.ts'
 import registerWatchHooks from './watch/hooks.ts'
 
 Hooks.on('init', () => {
@@ -18,5 +19,6 @@ Hooks.on('init', () => {
 
 Hooks.on('ready', () => {
   console.log(`Registering ${MODULE_NAME} settings...`)
+  registerCrewHooks()
   registerWatchHooks()
 })
