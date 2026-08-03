@@ -40,7 +40,8 @@ export default defineConfig({
     },
     viteStaticCopy({
       targets: [
-        { src: 'src/images/**/*', dest: '', rename: { stripBase: 1 } }
+        { src: 'src/images/**/*', dest: '', rename: { stripBase: 1 } },
+        { src: 'src/templates/**/*', dest: '', rename: { stripBase: 1 } }
       ]
     })
   ],
