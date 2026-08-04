@@ -34,20 +34,28 @@ class PirateCrewSheet extends foundry.applications.api.HandlebarsApplicationMixi
   static PARTS = {
     header: { template: `modules/${MODULE_ID}/templates/sheets/crew/header.hbs` },
     tabs: { template: 'templates/generic/tab-navigation.hbs' },
-    articlesView: { template: `modules/${MODULE_ID}/templates/sheets/crew/articles/view.hbs` },
-    articlesEdit: { template: `modules/${MODULE_ID}/templates/sheets/crew/articles/edit.hbs` },
-    officersView: { template: `modules/${MODULE_ID}/templates/sheets/crew/officers/view.hbs` },
-    officersEdit: { template: `modules/${MODULE_ID}/templates/sheets/crew/officers/edit.hbs` },
-    watchCrewsView: { template: `modules/${MODULE_ID}/templates/sheets/crew/watchCrews/view.hbs` },
-    watchCrewsEdit: { template: `modules/${MODULE_ID}/templates/sheets/crew/watchCrews/edit.hbs` },
-    provisionsView: { template: `modules/${MODULE_ID}/templates/sheets/crew/provisions/view.hbs` },
-    provisionsEdit: { template: `modules/${MODULE_ID}/templates/sheets/crew/provisions/edit.hbs` },
-    assetsView: { template: `modules/${MODULE_ID}/templates/sheets/crew/assets/view.hbs` },
-    assetsEdit: { template: `modules/${MODULE_ID}/templates/sheets/crew/assets/edit.hbs` },
+    articles: { template: `modules/${MODULE_ID}/templates/sheets/crew/articles/view.hbs` },
+    officers: { template: `modules/${MODULE_ID}/templates/sheets/crew/officers/view.hbs` },
+    watchCrews: { template: `modules/${MODULE_ID}/templates/sheets/crew/watchCrews/view.hbs` },
+    provisions: { template: `modules/${MODULE_ID}/templates/sheets/crew/provisions/view.hbs` },
+    assets: { template: `modules/${MODULE_ID}/templates/sheets/crew/assets/view.hbs` }
   }
 
   get isEditing () {
     return this.editing && this.isEditable;
+  }
+
+  _configureRenderParts (options: Record<string, any>) {
+    const parts = super._configureRenderParts(options)
+    const mode = this.isEditing ? 'edit' : 'view'
+    for (const tab of PirateCrewSheet.TABS.primary.tabs) {
+      if (!parts[tab.id]) continue
+      parts[tab.id] = {
+        ...parts[tab.id],
+        template: `modules/${MODULE_ID}/templates/sheets/crew/${tab.id}/${mode}.hbs`
+      }
+    }
+    return parts
   }
 
   _configureRenderOptions (options: Record<string, any>) {
@@ -56,11 +64,15 @@ class PirateCrewSheet extends foundry.applications.api.HandlebarsApplicationMixi
     if (this.document.limited) return
 
     options.parts.push('tabs')
-
-    const mode = this.isEditing ? 'Edit' : 'View'
     for (const tab of PirateCrewSheet.TABS.primary.tabs) {
-      options.parts.push(tab.id + mode)
+      options.parts.push(tab.id)
     }
+  }
+
+  async _preparePartContext (partId: string, context: Record<string, any>, options: Record<string, any>) {
+    context = await super._preparePartContext(partId, context, options)
+    if (context.tabs?.[partId]) context.tab = context.tabs[partId]
+    return context
   }
 
   async _prepareContext (options: Record<string, any>) {
