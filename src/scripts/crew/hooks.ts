@@ -1,3 +1,4 @@
+import { getClickedDocument } from '@revolutionarygamesco/common-foundryvtt'
 import { MODULE_ID } from '../settings.ts'
 import type { CrewData } from './data.ts'
 import CrewModel from './schema.ts'
@@ -24,6 +25,19 @@ const registerCrewHooks = () => {
   Hooks.on('preCreateActor', (actor: any) => {
     if (actor.type === `${MODULE_ID}.crew` && actor.img === 'icons/svg/mystery-man.svg') {
       actor.updateSource({ img: `modules/${MODULE_ID}/images/pirate.webp` })
+    }
+  })
+
+  Hooks.on('getActorContextOptions', (_directory: any, entries: any[]) => {
+    const edit = entries.find((entry: any) => entry.label === 'SIDEBAR.Edit')
+    if (!edit) return
+
+    const original = edit.onClick
+    edit.onClick = (event: PointerEvent, el: HTMLElement) => {
+      const actor = getClickedDocument(el, game.actors)
+      const sheet = (actor as any)?.sheet
+      if (sheet instanceof PirateCrewSheet) sheet.editing = true
+      return original(event, el)
     }
   })
 }

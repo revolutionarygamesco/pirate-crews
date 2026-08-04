@@ -4,6 +4,7 @@ import { MODULE_ID } from '../settings.ts'
 import CrewModel from './schema.ts'
 import PirateCrewSheet from './sheet.ts'
 import registerCrewHooks from './hooks.ts'
+import { generateID } from '@revolutionarygamesco/common-foundryvtt'
 
 vi.mock('./schema.ts', () => ({ default: class MockCrewModel {} }))
 vi.mock('./sheet.ts', () => ({ default: class MockPirateCrewSheet {} }))
@@ -77,6 +78,50 @@ describe('registerCrewHooks', () => {
       registerCrewHooks()
       Hooks.callAll('preCreateActor', actor)
       expect(updateSource).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('getActorContextOptions', () => {
+    const id = generateID()
+    let actor: foundry.documents.Actor
+    let sheet: PirateCrewSheet
+    let edit: { label: string, onClick: Mock }
+    let entries: Array<{ label: string, onClick: Mock }>
+    let el: HTMLElement
+
+    beforeEach(() => {
+      sheet = new PirateCrewSheet({})
+      actor = { sheet } as unknown as foundry.documents.Actor
+      el = { closest: () => ({ dataset: { entryId: id } }) } as unknown as HTMLElement
+      edit = { label: 'SIDEBAR.Edit', onClick: vi.fn().mockReturnValue('original') }
+      entries = [edit]
+      vi.stubGlobal('game', { actors: new Map([[id, actor]]) })
+    })
+
+    it('listens for the context menu', () => {
+      registerCrewHooks()
+      expect(hooks.on).toHaveBeenCalledWith('getActorContextOptions', expect.any(Function))
+    })
+
+    it('does nothing when there is no Edit entry', () => {
+      registerCrewHooks()
+      const other = [{ label: 'SIDEBAR.Export', onClick: vi.fn() }]
+      const orig = other[0].onClick
+      expect(() => Hooks.callAll('getActorContextOptions', {}, other)).not.toThrow()
+      expect(other[0].onClick).toBe(orig)
+    })
+
+    it('opens the crew sheet in edit mode', () => {
+      registerCrewHooks()
+      const original = edit.onClick
+      Hooks.callAll('getActorContextOptions', {}, entries)
+
+      const event = {} as PointerEvent
+      const result = edit.onClick(event, el)
+
+      expect(sheet.editing).toBe(true)
+      expect(original).toHaveBeenCalledWith(event, el)
+      expect(result).toBe('original')
     })
   })
 })
