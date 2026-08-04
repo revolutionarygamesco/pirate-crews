@@ -1,1 +1,13 @@
-<h1>Pirate Crew</h1>
+<header class="crew-header">
+  <img src="{{actor.img}}" data-edit="img" alt="{{actor.name}}" />
+  {{#if editing}}
+    <input type="text" name="name" value="{{actor.name}}" placeholder="Crew" />
+  {{else}}
+    <h1>{{actor.name}}</h1>
+  {{/if}}
+  {{#if editable}}
+    <button type="button" class="edit-toggle" data-action="toggleEdit" data-tooltip="{{localize 'revolutionary-piratecrews.sheet.header.toggleEdit'}}">
+      <i class="fa-solid {{#if editing}}fa-lock-open{{else}}fa-lock{{/if}}"></i>
+    </button>
+  {{/if}}
+</header>

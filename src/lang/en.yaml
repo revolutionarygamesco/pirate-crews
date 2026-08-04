@@ -14,6 +14,8 @@ revolutionary-piratecrews:
         `{ watches: Array<{ name: string, duration: number }>, offset: number }`.
     sheet:
       label: Pirate Crew
+      header:
+        toggleEdit: Toggle editing
     officers:
       name: Officers
       hint: |
