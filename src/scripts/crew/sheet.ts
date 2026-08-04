@@ -1,5 +1,8 @@
 import { generateApplicationPosition } from '@revolutionarygamesco/common-foundryvtt'
 import { MODULE_ID } from '../settings.ts'
+import { type CrewData } from './data.ts'
+import sortShareGroups from '../articles/groups.ts'
+import describeShares from '../articles/shares.ts'
 import CrewModel from './schema.ts'
 
 class PirateCrewSheet extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.sheets.ActorSheetV2) {
@@ -45,6 +48,15 @@ class PirateCrewSheet extends foundry.applications.api.HandlebarsApplicationMixi
     return this.editing && this.isEditable;
   }
 
+  get crew (): CrewModel & CrewData {
+    return this.actor.system as unknown as CrewModel & CrewData
+  }
+
+  get article1 (): string {
+    const groups = sortShareGroups(this.crew.officers)
+    return describeShares(groups)
+  }
+
   _configureRenderParts (options: Record<string, any>) {
     const parts = super._configureRenderParts(options)
     const mode = this.isEditing ? 'edit' : 'view'
@@ -76,11 +88,13 @@ class PirateCrewSheet extends foundry.applications.api.HandlebarsApplicationMixi
   }
 
   async _prepareContext (options: Record<string, any>) {
-    const system = this.actor.system as unknown as CrewModel
     const context = await super._prepareContext(options)
     context.actor = this.actor
-    context.system = system
-    context.fields = system.schema.fields
+    context.system = this.crew
+    context.fields = {
+      ...this.crew.schema.fields,
+      article1: this.article1
+    }
     context.editable = this.isEditable
     context.editing = this.isEditing
     context.tabs = this._prepareTabs('primary')

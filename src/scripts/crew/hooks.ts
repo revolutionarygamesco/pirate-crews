@@ -1,6 +1,6 @@
 import { getClickedDocument } from '@revolutionarygamesco/common-foundryvtt'
 import { MODULE_ID } from '../settings.ts'
-import type { CrewData } from './data.ts'
+import { type CrewData } from './data.ts'
 import CrewModel from './schema.ts'
 import PirateCrewSheet from './sheet.ts'
 

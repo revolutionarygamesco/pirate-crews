@@ -30,4 +30,14 @@
       top: 1em;
     }
   }
+
+  .tab {
+    padding: 2em;
+  }
+
+  .tab[data-tab="articles"][data-mode="view"] {
+    ol {
+      list-style-type: upper-roman;
+    }
+  }
 }

@@ -13,7 +13,7 @@ const sortShareGroups = (
   for (const key in assignments) {
     const shares = assignments[key].shares
     const arr = data.get(shares) ?? []
-    arr.push(assignments[key].title)
+    arr.push(game.i18n.localize(assignments[key].title))
     data.set(shares, arr)
   }
 

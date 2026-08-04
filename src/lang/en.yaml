@@ -38,6 +38,11 @@ revolutionary-piratecrews:
       watchCrews: Watch Crews
       provisions: Provisions
       assets: Ship & Stock
+    articles:
+      title: Articles of Agreement
+      firstDirections: |
+        The first article is written automatically to describe the settings in
+        the <strong>Officers</strong> tab.
   provisions:
     food:
       label: Vittles
