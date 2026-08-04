@@ -3,7 +3,7 @@ import { MODULE_ID } from '../settings.ts'
 import CrewModel from './schema.ts'
 
 class PirateCrewSheet extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.sheets.ActorSheetV2) {
-  editing: boolean = false
+  editing: boolean = this.isEditable
 
   static DEFAULT_OPTIONS = {
     classes: ['pirate-crew'],
