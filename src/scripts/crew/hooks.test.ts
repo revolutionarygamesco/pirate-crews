@@ -1,10 +1,10 @@
 import { beforeEach, describe, it, expect, afterEach, vi, type Mock } from 'vitest'
 import { mockHooks } from '@revolutionarygamesco/common-foundryvtt/mocks'
+import { generateID } from '@revolutionarygamesco/common-foundryvtt'
 import { MODULE_ID } from '../settings.ts'
 import CrewModel from './schema.ts'
 import PirateCrewSheet from './sheet.ts'
 import registerCrewHooks from './hooks.ts'
-import { generateID } from '@revolutionarygamesco/common-foundryvtt'
 
 vi.mock('./schema.ts', () => ({ default: class MockCrewModel {} }))
 vi.mock('./sheet.ts', () => ({ default: class MockPirateCrewSheet {} }))
