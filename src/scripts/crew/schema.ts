@@ -1,49 +1,32 @@
 import { type CrewData } from './data.ts'
-import loadOfficers from '../officers/load.ts'
-import loadProvisions from '../provisions/load.ts'
 
 class CrewModel extends foundry.abstract.TypeDataModel<CrewData> {
   static defineSchema () {
     const fields = foundry.data.fields
-    const officers = loadOfficers()
-    const provisions = loadProvisions()
 
     return {
-      officers: new fields.SchemaField(
-        Object.fromEntries(
-          Object.keys(officers).map(key => [
-            key,
-            new fields.SchemaField({
-              title: new fields.StringField({ initial: officers[key].title }),
-              description: new fields.HTMLField({ initial: officers[key].desc }),
-              sans: new fields.HTMLField({ initial: officers[key].sans }),
-              shares: new fields.NumberField({ max: 20, min: 1, initial: officers[key].shares })
-            })
-          ])
-        )
+      officers: new fields.TypedObjectField(
+        new fields.SchemaField({
+          actor: new fields.DocumentUUIDField({ type: 'Actor', nullable: true, required: false, initial: null }),
+          shares: new fields.NumberField({ min: 0, step: 0.25, initial: 1 })
+        })
       ),
-      watchCrews: new fields.ArrayField(new fields.SchemaField({
-        name: new fields.StringField(),
-        lead: new fields.StringField({
-          choices: Object.fromEntries(
-            Object.keys(officers).map(key => [key, officers[key].title])
-          )
-        }),
-        members: new fields.ArrayField(new fields.DocumentUUIDField({ type: 'Actor' })),
-        onDuty: new fields.BooleanField({ initial: false })
-      })),
-      provisions: new fields.SchemaField(
-        Object.fromEntries(
-          Object.keys(provisions).map(key => [
-            key,
-            new fields.SchemaField({
-              label: new fields.StringField({ initial: provisions[key].label }),
-              value: new fields.NumberField({ min: 0, initial: 0 })
-            })
-          ])
-        )
+      watchCrews: new fields.ArrayField(
+        new fields.SchemaField({
+          name: new fields.StringField({ required: true }),
+          lead: new fields.StringField({ required: false, blank: true, initial: '' }),
+          members: new fields.ArrayField(
+            new fields.DocumentUUIDField({ type: 'Actor', nullable: true, required: false, initial: null })
+          ),
+          onDuty: new fields.BooleanField({ initial: false })
+        })
       ),
-      stock: new fields.NumberField({ min: 0, initial: 0 })
+      provisions: new fields.TypedObjectField(
+        new fields.NumberField({ min: 0, initial: 0 })
+      ),
+      stock: new fields.NumberField({ min: 0, initial: 0 }),
+      articles: new fields.DocumentUUIDField({ type: 'JournalEntry', nullable: true, required: false, initial: null }),
+      ship: new fields.DocumentUUIDField({ nullable: true, required: false, initial: null })
     }
   }
 }
