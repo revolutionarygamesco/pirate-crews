@@ -25,7 +25,12 @@
   "documentTypes": {
     "Actor": {
       "crew": {
-        "htmlFields": ["articles.*", "officers.*.description"]
+        "htmlFields": ["officers.*.description"]
+      }
+    },
+    "Item": {
+      "article": {
+        "htmlFields": ["text"]
       }
     }
   },
