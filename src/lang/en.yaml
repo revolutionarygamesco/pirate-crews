@@ -2,6 +2,9 @@ TYPES:
   Actor:
     revolutionary-piratecrews:
       crew: Pirate Crew
+  Item:
+    revolutionary-piratecrews:
+      article: Pirate Crew Article
 revolutionary-piratecrews:
   settings:
     watches:
