@@ -9,7 +9,6 @@ class CrewModel extends foundry.abstract.TypeDataModel<CrewData> {
     const provisions = loadProvisions()
 
     return {
-      articles: new fields.ArrayField(new fields.HTMLField()),
       officers: new fields.SchemaField(
         Object.fromEntries(
           Object.keys(officers).map(key => [

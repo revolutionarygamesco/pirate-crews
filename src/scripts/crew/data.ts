@@ -1,4 +1,4 @@
-import { getObjectRecord, isStringArray, isNumber } from '@revolutionarygamesco/common'
+import { getObjectRecord, isNumber } from '@revolutionarygamesco/common'
 import { scopeLocalizer } from '@revolutionarygamesco/common-foundryvtt'
 import { MODULE_ID } from '../settings.ts'
 import { isOfficerAssignments, createOfficerAssignments, type OfficerAssignments } from '../officers/assignments.ts'
@@ -6,7 +6,6 @@ import { isWatchCrews, type WatchCrew } from './watch-crew.ts'
 import { isProvisions, createProvisions, type Provisions } from '../provisions/provisions.ts'
 
 export interface CrewData {
-  articles: string[]
   officers: OfficerAssignments,
   watchCrews: WatchCrew[],
   provisions: Provisions,
@@ -19,7 +18,6 @@ export const isCrewData = (
   const obj = getObjectRecord(candidate)
   if (!obj) return false
   return [
-    isStringArray(obj.articles),
     isOfficerAssignments(obj.officers),
     isWatchCrews(obj.watchCrews),
     isProvisions(obj.provisions),
@@ -32,7 +30,6 @@ export const createCrewData = (
 ): CrewData => {
   const t = scopeLocalizer([MODULE_ID, 'watch-crews'].join('.'))
   return {
-    articles: [],
     officers: createOfficerAssignments(overrides?.officers),
     watchCrews: [
       { name: t('starboard'), lead: 'quartermaster', members: [], onDuty: true },

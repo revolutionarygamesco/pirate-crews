@@ -11,7 +11,6 @@ describe('isCrewData', () => {
 
   it('accepts crew data', () => {
     expect(isCrewData({
-      articles: [],
       officers: createOfficerAssignments(),
       watchCrews: [
         { name: 'Starboard Crew', lead: 'quartermaster', members: [], onDuty: true },
