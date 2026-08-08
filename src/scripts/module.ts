@@ -11,7 +11,7 @@ registerCrewHooks()
 registerWatchHooks()
 registerPirateCrewSharesArticleEnricher()
 
-Hooks.on('init', () => {
+Hooks.once('ready', () => {
   registerWatchSettings()
   registerOfficerSettings()
   registerProvisions()
