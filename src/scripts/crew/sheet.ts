@@ -45,7 +45,10 @@ class PirateCrewSheet extends foundry.applications.api.HandlebarsApplicationMixi
     tabs: { template: 'templates/generic/tab-navigation.hbs' },
     ...Object.fromEntries(tabs.map(tab => [
       tab.id,
-      { template: `modules/${MODULE_ID}/templates/sheets/crew/${tab.id}/view.hbs` }
+      {
+        template: `modules/${MODULE_ID}/templates/sheets/crew/${tab.id}/view.hbs`,
+        scrollable: ['']
+      }
     ]))
   }
 

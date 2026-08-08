@@ -1,3 +1,4 @@
+import { makeLink, type Linkable } from '@revolutionarygamesco/common-foundryvtt'
 import  PirateCrewSheet from '../crew/sheet.ts'
 import { type PirateCrewSheetTab } from '../crew/tabs/tab.ts'
 import loadOfficers from './load.ts'
@@ -12,12 +13,20 @@ const officers: PirateCrewSheetTab = {
   ): Promise<void> {
     const defs = loadOfficers()
     const assignments = sheet.crew.officers
-    context.officers = []
 
-    for (const key in assignments) {
+    context.officers = []
+    for (const key in defs) {
+      const actor = assignments[key]?.actor
+        ? await foundry.utils.fromUuid(assignments[key].actor) as Linkable | null
+        : null
+
       context.officers.push({
+        key,
         ...defs[key],
-        ...assignments[key]
+        shares: assignments[key]?.shares ?? 1,
+        actor: actor
+          ? await foundry.applications.ux.TextEditor.enrichHTML(makeLink(actor))
+          : null
       })
     }
   },

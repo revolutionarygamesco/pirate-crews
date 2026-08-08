@@ -1,4 +1,14 @@
 .application.sheet.pirate-crew {
+  .null {
+    border: 1px dashed var(--color-form-hint);
+    color: var(--color-form-hint);
+    flex-grow: 1;
+    font-style: italic;
+    font-weight: 300;
+    padding: 1em;
+    text-align: center;
+  }
+
   .crew-header {
     --pirate-crew-title-width: calc(100% - 100px - 2em);
     position: relative;
@@ -35,16 +45,6 @@
       display: flex;
       gap: 1em;
       margin: 0 0 1em 0;
-
-      .null {
-        border: 1px dashed var(--color-form-hint);
-        color: var(--color-form-hint);
-        flex-grow: 1;
-        font-style: italic;
-        font-weight: 300;
-        padding: 1em;
-        text-align: center;
-      }
     }
   }
 
@@ -55,6 +55,19 @@
   .tab[data-tab="articles"][data-mode="view"] {
     ol {
       list-style-type: upper-roman;
+    }
+  }
+
+  .officer {
+    .null {
+      margin: 1em 0;
+      padding: 2em;
+    }
+
+    & + .officer {
+      border-top: 1px solid var(--color-form-hint);
+      margin-top: 2em;
+      padding-top: 2em;
     }
   }
 }

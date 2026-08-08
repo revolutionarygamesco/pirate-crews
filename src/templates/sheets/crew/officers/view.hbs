@@ -1,3 +1,15 @@
-<section class="tab {{tab.cssClass}}" data-tab="officers" data-group="primary" data-mode="view">
-  <p>This is the officers tab.</p>
+<section class="tab scrollable {{tab.cssClass}}" data-tab="officers" data-group="primary" data-mode="view">
+  {{#each officers as |officer|}}
+    <section class="officer {{officer.key}}">
+      <h3>{{officer.title}}</h3>
+      <p>{{officer.desc}}</p>
+      {{#if officer.actor}}
+        {{{officer.actor}}}
+      {{else}}
+        <p class="null">
+          {{{officer.sans}}}
+        </p>
+      {{/if}}
+    </section>
+  {{/each}}
 </section>
