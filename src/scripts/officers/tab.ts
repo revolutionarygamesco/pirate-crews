@@ -1,10 +1,13 @@
 import { makeLink, type Linkable, getDroppedDocument } from '@revolutionarygamesco/common-foundryvtt'
+import { MODULE_ID } from '../settings.ts'
 import  PirateCrewSheet from '../crew/sheet.ts'
 import { type PirateCrewSheetTab } from '../crew/tabs/tab.ts'
 import loadOfficers from './load.ts'
 
 const officers: PirateCrewSheetTab = {
   id: 'officers',
+  view: `modules/${MODULE_ID}/templates/sheets/crew/officers/view.hbs`,
+  edit: `modules/${MODULE_ID}/templates/sheets/crew/officers/view.hbs`,
   icon: 'fa-solid fa-skull-crossbones',
   dropSelectors: ['.officer'],
 

@@ -2,6 +2,8 @@ import type PirateCrewSheet from '../sheet.ts'
 
 export interface PirateCrewSheetTab {
   id: string
+  view: string
+  edit: string
   icon?: string
   actions?: Record<string, (this: PirateCrewSheet, ...args: any[]) => unknown>
   dropSelectors?: string[]

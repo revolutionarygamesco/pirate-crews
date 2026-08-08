@@ -69,7 +69,7 @@ class PirateCrewSheet extends foundry.applications.api.HandlebarsApplicationMixi
       if (!parts[tab.id]) continue
       parts[tab.id] = {
         ...parts[tab.id],
-        template: `modules/${MODULE_ID}/templates/sheets/crew/${tab.id}/${mode}.hbs`
+        template: tab[mode]
       }
     }
     return parts
