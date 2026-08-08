@@ -3,6 +3,7 @@ import { MODULE_ID } from '../settings.ts'
 import  PirateCrewSheet from '../crew/sheet.ts'
 import { type PirateCrewSheetTab } from '../crew/tabs/tab.ts'
 import loadOfficers from './load.ts'
+import assignOfficer from './assign.ts'
 
 const officers: PirateCrewSheetTab = {
   id: 'officers',
@@ -46,7 +47,8 @@ const officers: PirateCrewSheetTab = {
     const actor = await getDroppedDocument<foundry.documents.Actor>(event, 'Actor')
     if (!actor?.uuid) return false
 
-    await sheet.actor.update({ [`system.officers.${key}.actor`]: actor.uuid })
+    assignOfficer(key, sheet.crew.officers, actor)
+    await sheet.actor.update({ [`system.officers`]: sheet.crew.officers })
     return true
   }
 }
