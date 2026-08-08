@@ -18,7 +18,8 @@ describe('isCrewData', () => {
       ],
       provisions: createProvisions(),
       stock: 0,
-      articles: null
+      articles: null,
+      ship: null
     })).toBe(true)
   })
 })

@@ -6,11 +6,12 @@ import { isWatchCrews, type WatchCrew } from './watch-crew.ts'
 import { isProvisions, createProvisions, type Provisions } from '../provisions/provisions.ts'
 
 export interface CrewData {
-  officers: OfficerAssignments,
-  watchCrews: WatchCrew[],
-  provisions: Provisions,
-  stock: number,
+  officers: OfficerAssignments
+  watchCrews: WatchCrew[]
+  provisions: Provisions
+  stock: number
   articles: string | null
+  ship: string | null
 }
 
 export const isCrewData = (
@@ -23,7 +24,8 @@ export const isCrewData = (
     isWatchCrews(obj.watchCrews),
     isProvisions(obj.provisions),
     isNumber(obj.stock),
-    obj.articles === null || isString(obj.articles)
+    obj.articles === null || isString(obj.articles),
+    obj.ship === null || isString(obj.ship)
   ].every(test => test)
 }
 
@@ -40,6 +42,7 @@ export const createCrewData = (
     provisions: createProvisions(overrides?.provisions),
     stock: 0,
     articles: null,
+    ship: null,
     ...overrides
   }
 }
