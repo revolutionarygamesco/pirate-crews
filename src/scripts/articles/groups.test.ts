@@ -1,8 +1,13 @@
-import { describe, beforeEach, it, expect } from 'vitest'
+import { describe, beforeEach, it, expect, vi } from 'vitest'
 import { mockLocalize } from '@revolutionarygamesco/common-foundryvtt/mocks'
 import { MODULE_ID } from '../settings.ts'
+import { createOfficers } from '../officers/officers.ts'
 import { createOfficerAssignments } from '../officers/assignments.ts'
 import sortShareGroups from './groups.ts'
+
+vi.mock('../officers/load.ts', () => ({
+  default: () => createOfficers()
+}))
 
 describe('sortShareGroups', () => {
   beforeEach(() => {

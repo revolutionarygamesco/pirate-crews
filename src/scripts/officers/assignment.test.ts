@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { primitives } from '@revolutionarygamesco/common/testing'
 import { generateID } from '@revolutionarygamesco/common-foundryvtt'
-import { createOfficer } from './officer.ts'
 import { isOfficerAssignment, createOfficerAssignment } from './assignment.ts'
 
 describe('isOfficerAssignment', () => {
@@ -11,15 +10,15 @@ describe('isOfficerAssignment', () => {
 
   it('accepts an officer assignment', () => {
     expect(isOfficerAssignment({
-      ...createOfficer(),
-      actor: `Actor.${generateID()}`
+      actor: `Actor.${generateID()}`,
+      shares: 2
     })).toBe(true)
   })
 
   it('accepts a null officer assignment', () => {
     expect(isOfficerAssignment({
-      ...createOfficer(),
-      actor: null
+      actor: null,
+      shares: 2
     })).toBe(true)
   })
 })

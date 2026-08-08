@@ -1,25 +1,28 @@
-import { isString } from '@revolutionarygamesco/common'
-import { isOfficer, createOfficer, type Officer } from './officer.ts'
+import { getObjectRecord, isString, isNumber } from '@revolutionarygamesco/common'
 import { generateID } from '@revolutionarygamesco/common-foundryvtt'
 
-export interface OfficerAssignment extends Officer {
+export interface OfficerAssignment {
   actor: string | null
+  shares: number
 }
 
 export const isOfficerAssignment = (
   candidate: unknown
 ): candidate is OfficerAssignment => {
-  if (!isOfficer(candidate)) return false
-  const actor = (candidate as OfficerAssignment).actor
-  return actor === null || isString(actor)
+  const obj = getObjectRecord(candidate)
+  if (!obj) return false
+  return [
+    obj.actor === null || isString(obj.actor),
+    isNumber(obj.shares)
+  ].every(test => test)
 }
 
 export const createOfficerAssignment = (
   overrides?: Partial<OfficerAssignment>
 ): OfficerAssignment => {
   return {
-    ...createOfficer(),
     actor: `Actor.${generateID()}`,
+    shares: 1,
     ...overrides
   }
 }

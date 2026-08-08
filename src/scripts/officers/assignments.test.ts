@@ -17,9 +17,6 @@ describe('isOfficerAssignments', () => {
   it('accepts a dictionary of officer assignments', () => {
     expect(isOfficerAssignments({
       captain: {
-        title: 'Captain',
-        desc: 'This is the captain.',
-        sans: 'You need a captain.',
         shares: 2,
         actor: `Actor.${generateID()}`
       }
