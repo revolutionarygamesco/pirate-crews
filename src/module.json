@@ -27,11 +27,6 @@
       "crew": {
         "htmlFields": ["officers.*.description"]
       }
-    },
-    "Item": {
-      "article": {
-        "htmlFields": ["text"]
-      }
     }
   },
   "languages": [

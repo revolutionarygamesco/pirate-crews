@@ -2,9 +2,6 @@ TYPES:
   Actor:
     revolutionary-piratecrews:
       crew: Pirate Crew
-  Item:
-    revolutionary-piratecrews:
-      article: Pirate Crew Article
 revolutionary-piratecrews:
   settings:
     watches:
@@ -36,16 +33,10 @@ revolutionary-piratecrews:
     header:
       toggleEdit: Toggle editing
     tabs:
-      articles: Articles
       officers: Officers
       watchCrews: Watch Crews
       provisions: Provisions
       assets: Ship & Stock
-    articles:
-      title: Articles of Agreement
-      firstDirections: |
-        The first article is written automatically to describe the settings in
-        the <strong>Officers</strong> tab.
   provisions:
     food:
       label: Vittles
