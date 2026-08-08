@@ -42,6 +42,7 @@ revolutionary-piratecrews:
       assets: Ship & Stock
     officers:
       shares: Shares
+      unassign: Remove from office
   provisions:
     food:
       label: Vittles

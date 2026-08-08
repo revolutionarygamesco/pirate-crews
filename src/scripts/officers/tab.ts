@@ -12,6 +12,18 @@ const officers: PirateCrewSheetTab = {
   icon: 'fa-solid fa-skull-crossbones',
   dropSelectors: ['.officer'],
 
+  actions: {
+    async unassignOfficer (
+      this: PirateCrewSheet,
+      _event: PointerEvent,
+      target: HTMLElement
+    ) {
+      const key = target.closest<HTMLElement>('.officer')?.dataset.officerKey
+      if (!key) return
+      await this.actor.update({ [`system.officers.${key}.actor`]: null })
+    }
+  },
+
   async prepareContext (
     sheet: PirateCrewSheet,
     context: Record<string, any>
@@ -28,6 +40,7 @@ const officers: PirateCrewSheetTab = {
       context.officers.push({
         key,
         ...defs[key],
+        unassignable: sheet.isEditable && actor,
         shares: {
           value: assignments[key]?.shares ?? 1,
           field: (sheet.crew.schema.fields.officers as any).element.fields.shares,

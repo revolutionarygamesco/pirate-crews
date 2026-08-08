@@ -19,6 +19,12 @@
           {{{officer.sans}}}
         </p>
       {{/unless}}
+      {{#if officer.unassignable}}
+        <button type="button" class="unassign" data-action="unassignOfficer">
+          <i class="fa-solid fa-user-slash"></i>
+          {{localize 'revolutionary-piratecrews.sheet.officers.unassign'}}
+        </button>
+      {{/if}}
     </section>
   {{/each}}
 </section>
