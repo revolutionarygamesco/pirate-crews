@@ -6,4 +6,5 @@ export interface PirateCrewSheetTab {
   prepareContext: (sheet: PirateCrewSheet, context: Record<string, any>) => void | Promise<void>
   actions: Record<string, (this: PirateCrewSheet, ...args: any[]) => unknown>
   prepareSubmitData: (sheet: PirateCrewSheet, submitData: Record<string, any>) => void
+  onRender (sheet: PirateCrewSheet, el: HTMLElement): void
 }
