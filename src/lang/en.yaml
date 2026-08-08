@@ -32,6 +32,9 @@ revolutionary-piratecrews:
     label: Pirate Crew
     header:
       toggleEdit: Toggle editing
+      drop:
+        articles: Drag articles here
+        ship: Drag ship here
     tabs:
       officers: Officers
       watchCrews: Watch Crews

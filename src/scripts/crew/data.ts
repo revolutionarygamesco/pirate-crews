@@ -1,4 +1,4 @@
-import { getObjectRecord, isNumber } from '@revolutionarygamesco/common'
+import { getObjectRecord, isNumber, isString } from '@revolutionarygamesco/common'
 import { scopeLocalizer } from '@revolutionarygamesco/common-foundryvtt'
 import { MODULE_ID } from '../settings.ts'
 import { isOfficerAssignments, createOfficerAssignments, type OfficerAssignments } from '../officers/assignments.ts'
@@ -9,7 +9,8 @@ export interface CrewData {
   officers: OfficerAssignments,
   watchCrews: WatchCrew[],
   provisions: Provisions,
-  stock: number
+  stock: number,
+  articles: string | null
 }
 
 export const isCrewData = (
@@ -21,7 +22,8 @@ export const isCrewData = (
     isOfficerAssignments(obj.officers),
     isWatchCrews(obj.watchCrews),
     isProvisions(obj.provisions),
-    isNumber(obj.stock)
+    isNumber(obj.stock),
+    obj.articles === null || isString(obj.articles)
   ].every(test => test)
 }
 
@@ -37,6 +39,7 @@ export const createCrewData = (
     ],
     provisions: createProvisions(overrides?.provisions),
     stock: 0,
+    articles: null,
     ...overrides
   }
 }

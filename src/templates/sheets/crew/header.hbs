@@ -10,4 +10,16 @@
       <i class="fa-solid {{#if editing}}fa-lock-open{{else}}fa-lock{{/if}}"></i>
     </button>
   {{/if}}
+  <div class="related">
+    <div class="articles{{#unless articles}} null{{/unless}}">
+      {{#if articles}}
+        {{{articles}}}
+      {{else}}
+        {{localize 'revolutionary-piratecrews.sheet.header.drop.articles'}}
+      {{/if}}
+    </div>
+    <div class="ship null">
+      {{localize 'revolutionary-piratecrews.sheet.header.drop.ship'}}
+    </div>
+  </div>
 </header>

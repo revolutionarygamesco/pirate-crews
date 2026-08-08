@@ -1,4 +1,8 @@
-import { generateApplicationPosition } from '@revolutionarygamesco/common-foundryvtt'
+import {
+  generateApplicationPosition,
+  getDroppedDocument,
+  makeLink
+} from '@revolutionarygamesco/common-foundryvtt'
 import { MODULE_ID } from '../settings.ts'
 import { type CrewData } from './data.ts'
 import CrewModel from './schema.ts'
@@ -20,7 +24,10 @@ class PirateCrewSheet extends foundry.applications.api.HandlebarsApplicationMixi
     },
     form: {
       submitOnChange: true
-    }
+    },
+    dragDrop: [
+      { dropSelector: '.crew-header .related .articles' }
+    ]
   }
 
   static TABS = {
@@ -81,6 +88,10 @@ class PirateCrewSheet extends foundry.applications.api.HandlebarsApplicationMixi
   }
 
   async _prepareContext (options: Record<string, any>) {
+    const articles = this.crew.articles
+      ? await foundry.utils.fromUuid(this.crew.articles) as foundry.documents.JournalEntry
+      : null
+
     const context = await super._prepareContext(options)
     context.actor = this.actor
     context.system = this.crew
@@ -88,6 +99,9 @@ class PirateCrewSheet extends foundry.applications.api.HandlebarsApplicationMixi
     context.editable = this.isEditable
     context.editing = this.isEditing
     context.tabs = this._prepareTabs('primary')
+    context.articles = articles
+      ? await foundry.applications.ux.TextEditor.enrichHTML(makeLink(articles))
+      : null
     return context
   }
 
@@ -111,6 +125,16 @@ class PirateCrewSheet extends foundry.applications.api.HandlebarsApplicationMixi
   static async toggleEdit (this: PirateCrewSheet) {
     this.editing = !this.editing
     await this.render()
+  }
+
+  _canDragDrop (_selector: string): boolean {
+    return this.isEditable
+  }
+
+  async _onDrop (event: DragEvent): Promise<void> {
+    const journal = await getDroppedDocument<foundry.documents.JournalEntry>(event, 'JournalEntry')
+    if (!journal?.uuid) return
+    await this.actor.update({ 'system.articles': journal.uuid })
   }
 }
 

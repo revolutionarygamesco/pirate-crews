@@ -17,7 +17,8 @@ describe('isCrewData', () => {
         { name: 'Larboard Crew', lead: 'master', members: [], onDuty: false },
       ],
       provisions: createProvisions(),
-      stock: 0
+      stock: 0,
+      articles: null
     })).toBe(true)
   })
 })
