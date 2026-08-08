@@ -18,8 +18,12 @@
         {{localize 'revolutionary-piratecrews.sheet.header.drop.articles'}}
       {{/if}}
     </div>
-    <div class="ship null">
-      {{localize 'revolutionary-piratecrews.sheet.header.drop.ship'}}
+    <div class="ship{{#unless ship}} null{{/unless}}">
+      {{#if ship}}
+        {{{ship}}}
+      {{else}}
+        {{localize 'revolutionary-piratecrews.sheet.header.drop.ship'}}
+      {{/if}}
     </div>
   </div>
 </header>

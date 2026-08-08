@@ -1,7 +1,8 @@
 import {
   generateApplicationPosition,
   getDroppedDocument,
-  makeLink
+  makeLink,
+  type Linkable
 } from '@revolutionarygamesco/common-foundryvtt'
 import { MODULE_ID } from '../settings.ts'
 import { type CrewData } from './data.ts'
@@ -26,7 +27,8 @@ class PirateCrewSheet extends foundry.applications.api.HandlebarsApplicationMixi
       submitOnChange: true
     },
     dragDrop: [
-      { dropSelector: '.crew-header .related .articles' }
+      { dropSelector: '.crew-header .related .articles' },
+      { dropSelector: '.crew-header .related .ship' }
     ]
   }
 
@@ -91,6 +93,9 @@ class PirateCrewSheet extends foundry.applications.api.HandlebarsApplicationMixi
     const articles = this.crew.articles
       ? await foundry.utils.fromUuid(this.crew.articles) as foundry.documents.JournalEntry
       : null
+    const ship = this.crew.ship
+      ? await foundry.utils.fromUuid(this.crew.ship) as unknown as Linkable
+      : null
 
     const context = await super._prepareContext(options)
     context.actor = this.actor
@@ -101,6 +106,9 @@ class PirateCrewSheet extends foundry.applications.api.HandlebarsApplicationMixi
     context.tabs = this._prepareTabs('primary')
     context.articles = articles
       ? await foundry.applications.ux.TextEditor.enrichHTML(makeLink(articles))
+      : null
+    context.ship = ship
+      ? await foundry.applications.ux.TextEditor.enrichHTML(makeLink(ship))
       : null
     return context
   }
@@ -132,9 +140,18 @@ class PirateCrewSheet extends foundry.applications.api.HandlebarsApplicationMixi
   }
 
   async _onDrop (event: DragEvent): Promise<void> {
-    const journal = await getDroppedDocument<foundry.documents.JournalEntry>(event, 'JournalEntry')
-    if (!journal?.uuid) return
-    await this.actor.update({ 'system.articles': journal.uuid })
+    const target = event.target as HTMLElement
+
+    if (target.closest('.articles')) {
+      const journal = await getDroppedDocument<foundry.documents.JournalEntry>(event, 'JournalEntry')
+      if (!journal?.uuid) return
+      await this.actor.update({ 'system.articles': journal.uuid })
+      return
+    }
+
+    if (target.closest('.ship')) {
+      Hooks.callAll(`${MODULE_ID}.dropShip`, this.actor, event)
+    }
   }
 }
 
