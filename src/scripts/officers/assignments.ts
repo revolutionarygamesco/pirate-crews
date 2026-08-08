@@ -19,7 +19,7 @@ export const isOfficerAssignments = (
 }
 
 export const createOfficerAssignments = (
-  overrides?: Record<string, Partial<OfficerAssignment>>
+  overrides?: { [key: string]: Partial<OfficerAssignment> }
 ): OfficerAssignments => {
   const fullOverrides: Record<string, OfficerAssignment> = {}
   for (const key in overrides) {
@@ -28,8 +28,16 @@ export const createOfficerAssignments = (
 
   const base = createOfficers()
   const assignments: OfficerAssignments = {}
+  const defaultShares: Record<string, number> = {
+    captain: 2,
+    quartermaster: 2,
+    master: 1.5,
+    bosun: 1.5,
+    gunner: 1.5
+  }
   for (const key in base) {
-    assignments[key] = { ...base[key], actor: null }
+    const shares = key in defaultShares ? defaultShares[key] : 1.25
+    assignments[key] = { actor: null, shares }
   }
 
   return {
