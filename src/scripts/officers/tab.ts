@@ -1,4 +1,4 @@
-import { makeLink, type Linkable } from '@revolutionarygamesco/common-foundryvtt'
+import { makeLink, type Linkable, getDroppedDocument } from '@revolutionarygamesco/common-foundryvtt'
 import  PirateCrewSheet from '../crew/sheet.ts'
 import { type PirateCrewSheetTab } from '../crew/tabs/tab.ts'
 import loadOfficers from './load.ts'
@@ -6,6 +6,7 @@ import loadOfficers from './load.ts'
 const officers: PirateCrewSheetTab = {
   id: 'officers',
   icon: 'fa-solid fa-skull-crossbones',
+  dropSelectors: ['.officer'],
 
   async prepareContext (
     sheet: PirateCrewSheet,
@@ -31,20 +32,19 @@ const officers: PirateCrewSheetTab = {
     }
   },
 
-  actions: {},
+  async onDrop (
+    sheet: PirateCrewSheet,
+    event: DragEvent
+  ): Promise<boolean> {
+    const wrapper = (event.target as HTMLElement).closest<HTMLElement>('.officer')
+    const key = wrapper?.dataset.officerKey
+    if (!key || !(key in loadOfficers())) return false
 
-  prepareSubmitData (
-    _sheet: PirateCrewSheet,
-    _submitData: Record<string, any>
-  ) {
-    return
-  },
+    const actor = await getDroppedDocument<foundry.documents.Actor>(event, 'Actor')
+    if (!actor?.uuid) return false
 
-  onRender (
-    _sheet: PirateCrewSheet,
-    _el: HTMLElement
-  ) {
-    return
+    await sheet.actor.update({ [`system.officers.${key}.actor`]: actor.uuid })
+    return true
   }
 }
 

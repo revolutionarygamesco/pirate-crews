@@ -1,15 +1,18 @@
 <section class="tab scrollable {{tab.cssClass}}" data-tab="officers" data-group="primary" data-mode="view">
   {{#each officers as |officer|}}
-    <section class="officer {{officer.key}}">
-      <h3>{{officer.title}}</h3>
+    <section class="officer {{officer.key}}" data-officer-key="{{officer.key}}">
+      <h4>
+        {{officer.title}}
+        {{#if officer.actor}}
+          {{{officer.actor}}}
+        {{/if}}
+      </h4>
       <p>{{officer.desc}}</p>
-      {{#if officer.actor}}
-        {{{officer.actor}}}
-      {{else}}
+      {{#unless officer.actor}}
         <p class="null">
           {{{officer.sans}}}
         </p>
-      {{/if}}
+      {{/unless}}
     </section>
   {{/each}}
 </section>

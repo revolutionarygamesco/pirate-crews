@@ -10,6 +10,7 @@ import CrewModel from './schema.ts'
 import tabs from './tabs/index.ts'
 
 const tabActions = () => Object.assign({}, ...tabs.map(tab => tab.actions ?? {}))
+const tabDropSelectors = () => tabs.flatMap(tab => (tab.dropSelectors ?? []).map(dropSelector => ({ dropSelector })))
 
 class PirateCrewSheet extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.sheets.ActorSheetV2) {
   editing: boolean = false
@@ -28,7 +29,8 @@ class PirateCrewSheet extends foundry.applications.api.HandlebarsApplicationMixi
     },
     dragDrop: [
       { dropSelector: '.crew-header .related .articles' },
-      { dropSelector: '.crew-header .related .ship' }
+      { dropSelector: '.crew-header .related .ship' },
+      ...tabDropSelectors()
     ]
   }
 
@@ -154,6 +156,10 @@ class PirateCrewSheet extends foundry.applications.api.HandlebarsApplicationMixi
 
     if (target.closest('.ship')) {
       Hooks.callAll(`${MODULE_ID}.dropShip`, this.actor, event)
+    }
+
+    for (const tab of tabs) {
+      if (await tab.onDrop?.(this, event)) return
     }
   }
 }
