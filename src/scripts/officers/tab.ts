@@ -28,7 +28,11 @@ const officers: PirateCrewSheetTab = {
       context.officers.push({
         key,
         ...defs[key],
-        shares: assignments[key]?.shares ?? 1,
+        shares: {
+          value: assignments[key]?.shares ?? 1,
+          field: (sheet.crew.schema.fields.officers as any).element.fields.shares,
+          name: `system.officers.${key}.shares`
+        },
         actor: actor
           ? await foundry.applications.ux.TextEditor.enrichHTML(makeLink(actor))
           : null

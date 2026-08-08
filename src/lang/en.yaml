@@ -40,6 +40,8 @@ revolutionary-piratecrews:
       watchCrews: Watch Crews
       provisions: Provisions
       assets: Ship & Stock
+    officers:
+      shares: Shares
   provisions:
     food:
       label: Vittles

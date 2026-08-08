@@ -7,6 +7,12 @@
           {{{officer.actor}}}
         {{/if}}
       </h4>
+      {{#if editable}}
+      <label class="shares">
+        <span>{{localize "revolutionary-piratecrews.sheet.officers.shares"}}</span>
+        {{formInput officer.shares.field value=officer.shares.value name=officer.shares.name}}
+      </label>
+      {{/if}}
       <p>{{officer.desc}}</p>
       {{#unless officer.actor}}
         <p class="null">
