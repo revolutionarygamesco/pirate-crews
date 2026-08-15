@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@revolutionarygamesco/common": "^1.2.8",
-    "@revolutionarygamesco/common-foundryvtt": "^0.5.16"
+    "@revolutionarygamesco/common-foundryvtt": "^0.5.18"
   },
   "allowScripts": {
     "@parcel/watcher@2.5.1": true,
