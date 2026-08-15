@@ -1,2 +1,2 @@
-export const MODULE_NAME = 'Foundry VTT Module Starter'
-export const MODULE_ID = 'revolutionary-fvttmodstarter'
+export const MODULE_NAME = 'Pirate Crews'
+export const MODULE_ID = 'revolutionary-piratecrews'

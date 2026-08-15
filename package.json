@@ -1,6 +1,6 @@
 {
-  "name": "@revolutionarygamesco/fvttmod-starter",
-  "description": "A starting point for Foundry VTT modules.",
+  "name": "@revolutionarygamesco/pirate-crews",
+  "description": "A module for organizing pirate crews in Foundry VTT.",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
