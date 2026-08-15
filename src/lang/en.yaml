@@ -21,33 +21,22 @@ revolutionary-piratecrews:
     larboard: Larboard Crew
     idlers: Idlers
   specialists:
-    captain:
-      title: Captain
-    quartermaster:
-      title: Quartermaster
-    master:
-      title: Sailing Master
-      mate: Master’s Mate
-    bosun:
-      title: Bosun
-      mate: Bosun’s Mate
-    gunner:
-      title: Master Gunner
-      mate: Gunner’s Mate
-    carpenter:
-      title: Master Carpenter
-      mate: Carpenter’s Mate
-    surgeon:
-      title: Surgeon
-      mate: Surgeon’s Mate
-    cooper:
-      title: Cooper
-      mate: Cooper’s Mate
-    armorer:
-      title: Armorer
-      mate: Armorer’s Mate
-    sailmaker:
-      title: Sailmaker
-      mate: Sailmaker’s Mate
-    cook:
-      title: Cook
+    captain: Captain
+    quartermaster: Quartermaster
+    master: Sailing Master
+    master-mate: Master’s Mate
+    bosun: Bosun
+    bosun-mate: Bosun’s Mate
+    gunner: Master Gunner
+    gunner-mate: Gunner’s Mate
+    carpenter: Master Carpenter
+    carpenter-mate: Carpenter’s Mate
+    surgeon: Surgeon
+    surgeon-mate: Surgeon’s Mate
+    cooper: Cooper
+    cooper-mate: Cooper’s Mate
+    armorer: Armorer
+    armorer-mate: Armorer’s Mate
+    sailmaker: Sailmaker
+    sailmaker-mate: Sailmaker’s Mate
+    cook: Cook
