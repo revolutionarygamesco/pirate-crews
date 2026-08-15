@@ -1,0 +1,17 @@
+_id: XI4djZZrFapHmqqs
+_key: '!journal!XI4djZZrFapHmqqs'
+name: Traditions of Piracy
+ownership:
+  default: 0
+pages:
+  - _id: DxrzV4elMUT5UvaB
+    _key: '!journal.pages!XI4djZZrFapHmqqs.DxrzV4elMUT5UvaB'
+    name: Introduction
+    type: text
+    title:
+      show: true
+      level: 1
+    text:
+      format: 1
+      content: |
+        <p>Lorem ipsum dolor sit amet.</p>
