@@ -1,0 +1,34 @@
+{
+  "name": "@revolutionarygamesco/fvttmod-starter",
+  "description": "A starting point for Foundry VTT modules.",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && vite build",
+    "pack": "node ./scripts/pack.js",
+    "complete-table": "node ./scripts/complete-table.js",
+    "test": "vitest run --typecheck && npm run typecheck",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc -p tsconfig.json",
+    "typecheck:build": "tsc -p tsconfig.build.json"
+  },
+  "devDependencies": {
+    "@foundryvtt/foundryvtt-cli": "^3.0.4",
+    "@types/node": "^26.2.0",
+    "@vitest/coverage-v8": "^4.1.10",
+    "sass": "^1.102.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.1",
+    "vite-plugin-static-copy": "^4.1.1",
+    "vitest": "^4.1.10"
+  },
+  "dependencies": {
+    "@revolutionarygamesco/common": "^1.2.7",
+    "@revolutionarygamesco/common-foundryvtt": "^0.5.16"
+  },
+  "allowScripts": {
+    "@parcel/watcher@2.5.1": true,
+    "classic-level@3.0.0": true,
+    "fsevents@2.3.3": true
+  }
+}
