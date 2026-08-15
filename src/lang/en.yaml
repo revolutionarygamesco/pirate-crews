@@ -16,3 +16,38 @@ revolutionary-piratecrews:
     afternoon: Afternoon Watch
     dog1: First Dog Watch
     dog2: Second Dog Watch
+  crews:
+    starboard: Starboard Crew
+    larboard: Larboard Crew
+    idlers: Idlers
+  specialists:
+    captain:
+      title: Captain
+    quartermaster:
+      title: Quartermaster
+    master:
+      title: Sailing Master
+      mate: Master’s Mate
+    bosun:
+      title: Bosun
+      mate: Bosun’s Mate
+    gunner:
+      title: Master Gunner
+      mate: Gunner’s Mate
+    carpenter:
+      title: Master Carpenter
+      mate: Carpenter’s Mate
+    surgeon:
+      title: Surgeon
+      mate: Surgeon’s Mate
+    cooper:
+      title: Cooper
+      mate: Cooper’s Mate
+    armorer:
+      title: Armorer
+      mate: Armorer’s Mate
+    sailmaker:
+      title: Sailmaker
+      mate: Sailmaker’s Mate
+    cook:
+      title: Cook
