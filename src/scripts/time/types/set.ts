@@ -1,4 +1,6 @@
 import { getObjectRecord, isNumber } from '@revolutionarygamesco/common'
+import { scopeLocalizer } from '@revolutionarygamesco/common-foundryvtt'
+import { MODULE_ID } from '../../settings.ts'
 import { type Watch, isWatchArray } from './watch.ts'
 
 export const SECONDS_PER_HOUR = 60 * 60
@@ -11,15 +13,16 @@ export interface WatchSetData {
 export const createWatchSetData = (
   overrides?: Partial<WatchSetData>
 ): WatchSetData => {
+  const t = scopeLocalizer([MODULE_ID, 'watches'].join('.'))
   return {
     watches: [
-      { name: 'First Watch', duration: 4 * SECONDS_PER_HOUR },
-      { name: 'Middle Watch', duration: 4 * SECONDS_PER_HOUR },
-      { name: 'Morning Watch', duration: 4 * SECONDS_PER_HOUR },
-      { name: 'Forenoon Watch', duration: 4 * SECONDS_PER_HOUR },
-      { name: 'Afternoon Watch', duration: 4 * SECONDS_PER_HOUR },
-      { name: 'First Dog Watch', duration: 2 * SECONDS_PER_HOUR },
-      { name: 'Second Dog Watch', duration: 2 * SECONDS_PER_HOUR }
+      { name: t('first'), duration: 4 * SECONDS_PER_HOUR },
+      { name: t('middle'), duration: 4 * SECONDS_PER_HOUR },
+      { name: t('morning'), duration: 4 * SECONDS_PER_HOUR },
+      { name: t('forenoon'), duration: 4 * SECONDS_PER_HOUR },
+      { name: t('afternoon'), duration: 4 * SECONDS_PER_HOUR },
+      { name: t('dog1'), duration: 2 * SECONDS_PER_HOUR },
+      { name: t('dog2'), duration: 2 * SECONDS_PER_HOUR }
     ],
     offset: -4 * SECONDS_PER_HOUR,
     ...overrides

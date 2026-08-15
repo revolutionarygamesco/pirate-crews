@@ -4,9 +4,9 @@ import { isWatchSetData } from '../types/set.ts'
 import WatchSet from '../set.ts'
 
 const registerWatchSettings = (): void => {
-  const t = scopeLocalizer([MODULE_ID, 'settings'].join('.'))
-  const name = t(['watches', 'name'])
-  const hint = t(['watches', 'hint'])
+  const t = scopeLocalizer([MODULE_ID, 'settings', 'time'].join('.'))
+  const name = t('name')
+  const hint = t('hint')
   const initial = (new WatchSet()).toObject()
 
   const type = new foundry.data.fields.JSONField({
@@ -18,7 +18,7 @@ const registerWatchSettings = (): void => {
     persisted: true,
     required: true,
     validate: (candidate: any) => isWatchSetData(candidate),
-    validationError: t(['watches', 'error'])
+    validationError: t('error'),
   })
 
   game.settings.register(MODULE_ID, 'watches', {
