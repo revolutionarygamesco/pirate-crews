@@ -12,7 +12,7 @@ describe('createWatchSetData', () => {
   })
 
   it('can set the watches', () => {
-    const data = createWatchSetData({ watches: [{ name, duration }] })
+    const data = createWatchSetData({ watches: [{ name, duration, idlers: true }] })
     expect(data.watches).toHaveLength(1)
     expect(data.watches[0].name).toBe(name)
     expect(data.watches[0].duration).toBe(duration)
@@ -24,7 +24,7 @@ describe('createWatchSetData', () => {
   })
 
   it('can set both', () => {
-    const data = createWatchSetData({ watches: [{ name, duration }], offset: 0 })
+    const data = createWatchSetData({ watches: [{ name, duration, idlers: true }], offset: 0 })
     expect(data.watches).toHaveLength(1)
     expect(data.watches[0].name).toBe(name)
     expect(data.watches[0].duration).toBe(duration)

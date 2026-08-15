@@ -1,7 +1,5 @@
-import { scopeLocalizer } from '@revolutionarygamesco/common-foundryvtt'
-import { MODULE_ID } from '../settings.ts'
 import { type Watch } from './types/watch.ts'
-import { type WatchSetData, SECONDS_PER_HOUR } from './types/set.ts'
+import { createWatchSetData, type WatchSetData } from './types/set.ts'
 import { type WatchInstance } from './types/instance.ts'
 import isInWatchInstance from './methods/in-instance.ts'
 
@@ -10,14 +8,9 @@ export default class WatchSet {
   offset: number
 
   constructor (options?: Partial<WatchSetData>) {
-    const t = scopeLocalizer([MODULE_ID, 'watches', 'default'].join('.'))
-    const standards = ['first', 'middle', 'morning', 'forenoon', 'afternoon']
-      .map(node => ({ name: t(node), duration: 4 * SECONDS_PER_HOUR }))
-    const dogs = ['dog1', 'dog2']
-      .map(node => ({ name: t(node), duration: 2 * SECONDS_PER_HOUR }))
-
-    this.offset = options?.offset ?? -4 * SECONDS_PER_HOUR
-    this.watches = options?.watches ?? [...standards, ...dogs]
+    const { watches, offset } = createWatchSetData(options)
+    this.offset = offset
+    this.watches = watches
   }
 
   get dayLength () {

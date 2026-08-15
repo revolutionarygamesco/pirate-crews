@@ -15,7 +15,7 @@ describe('WatchSet', () => {
     it('can take other watches', () => {
       const name = 'Test Watch'
       const duration = 1000
-      const set = new WatchSet({ watches: [{ name, duration }] })
+      const set = new WatchSet({ watches: [{ name, duration, idlers: true }] })
 
       expect(set.watches).toHaveLength(1)
       expect(set.offset).toBe(-4 * SECONDS_PER_HOUR)
@@ -58,7 +58,7 @@ describe('WatchSet', () => {
       const timestamp = ((3 * 24) + 7.5) * SECONDS_PER_HOUR // 7.5 hours into day 3
       const { name, duration, start, end } = set.getCurrent(timestamp)
 
-      expect(name).toBe(`${MODULE_ID}.watches.default.morning`)
+      expect(name).toBe(`${MODULE_ID}.watches.morning`)
       expect(duration).toBe(4 * SECONDS_PER_HOUR)
       expect(start).toBe(((3 * 24) + 4) * SECONDS_PER_HOUR)
       expect(end).toBe(((3 * 24) + 8) * SECONDS_PER_HOUR)
@@ -68,21 +68,21 @@ describe('WatchSet', () => {
       const set = new WatchSet()
       const timestamp = ((3 * 24) + 21) * SECONDS_PER_HOUR
       const { name } = set.getCurrent(timestamp)
-      expect(name).toBe(`${MODULE_ID}.watches.default.first`)
+      expect(name).toBe(`${MODULE_ID}.watches.first`)
     })
 
     it('returns First Watch at midnight', () => {
       const set = new WatchSet()
       const timestamp = (3 * 24) * SECONDS_PER_HOUR
       const { name } = set.getCurrent(timestamp)
-      expect(name).toBe(`${MODULE_ID}.watches.default.first`)
+      expect(name).toBe(`${MODULE_ID}.watches.first`)
     })
 
     it('returns Middle Watch a second after midnight', () => {
       const set = new WatchSet()
       const timestamp = (3 * 24) * SECONDS_PER_HOUR
       const { name } = set.getCurrent(timestamp + 1)
-      expect(name).toBe(`${MODULE_ID}.watches.default.middle`)
+      expect(name).toBe(`${MODULE_ID}.watches.middle`)
     })
   })
 
@@ -109,7 +109,7 @@ describe('WatchSet', () => {
       const name = 'Test Watch'
       const duration = 1000
       const offset = 0
-      const set = new WatchSet({ watches: [{ name, duration }], offset })
+      const set = new WatchSet({ watches: [{ name, duration, idlers: true }], offset })
       const actual = set.toObject()
 
       expect(isWatchSetData(actual)).toBe(true)

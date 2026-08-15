@@ -16,13 +16,13 @@ export const createWatchSetData = (
   const t = scopeLocalizer([MODULE_ID, 'watches'].join('.'))
   return {
     watches: [
-      { name: t('first'), duration: 4 * SECONDS_PER_HOUR },
-      { name: t('middle'), duration: 4 * SECONDS_PER_HOUR },
-      { name: t('morning'), duration: 4 * SECONDS_PER_HOUR },
-      { name: t('forenoon'), duration: 4 * SECONDS_PER_HOUR },
-      { name: t('afternoon'), duration: 4 * SECONDS_PER_HOUR },
-      { name: t('dog1'), duration: 2 * SECONDS_PER_HOUR },
-      { name: t('dog2'), duration: 2 * SECONDS_PER_HOUR }
+      { name: t('first'), duration: 4 * SECONDS_PER_HOUR, idlers: false },
+      { name: t('middle'), duration: 4 * SECONDS_PER_HOUR, idlers: false },
+      { name: t('morning'), duration: 4 * SECONDS_PER_HOUR, idlers: true },
+      { name: t('forenoon'), duration: 4 * SECONDS_PER_HOUR, idlers: true },
+      { name: t('afternoon'), duration: 4 * SECONDS_PER_HOUR, idlers: true },
+      { name: t('dog1'), duration: 2 * SECONDS_PER_HOUR, idlers: true },
+      { name: t('dog2'), duration: 2 * SECONDS_PER_HOUR, idlers: false }
     ],
     offset: -4 * SECONDS_PER_HOUR,
     ...overrides

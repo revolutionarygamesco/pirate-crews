@@ -1,8 +1,9 @@
-import { getObjectRecord, isString, isNumber, makeArrayGuard } from '@revolutionarygamesco/common'
+import { getObjectRecord, isString, isNumber, isBoolean, makeArrayGuard } from '@revolutionarygamesco/common'
 
 export interface Watch {
   name: string
   duration: number
+  idlers: boolean
 }
 
 export const createWatch = (
@@ -11,6 +12,7 @@ export const createWatch = (
   return {
     name: 'First Watch',
     duration: 14400,
+    idlers: false,
     ...overrides
   }
 }
@@ -22,7 +24,8 @@ export const isWatch = (
   if (!obj) return false
   return [
     isString(obj.name),
-    isNumber(obj.duration)
+    isNumber(obj.duration),
+    isBoolean(obj.idlers)
   ].every(test => test === true)
 }
 
