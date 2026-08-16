@@ -1,11 +1,13 @@
 import { selectRandomElement, isString } from '@revolutionarygamesco/common'
 import { getID } from '@revolutionarygamesco/common-foundryvtt'
 import { type CrewData } from './types/data.ts'
+import { type Provisions } from '../provisions/types/provisions.ts'
 import { type Specialization } from './types/specialization.ts'
 import { type WatchInstance } from '../time/types/instance.ts'
 import { isWatchTeam, type WatchTeam } from './types/team.ts'
 import getOtherTeam from './methods/other-team.ts'
 import loadSpecializationDefinitions from './foundry/load.ts'
+import loadProvisions from '../provisions/foundry/load.ts'
 import loadWatches from '../time/foundry/load.ts'
 
 export type Permission = 'ship' | 'articles' | 'crew' | 'provisions' | 'navigation' | 'exploits'
@@ -16,6 +18,7 @@ class Crew {
   specialists: Map<string, Specialization>
   starboard: foundry.documents.Actor[]
   larboard: foundry.documents.Actor[]
+  provisions: Provisions
 
   constructor (data?: Partial<CrewData>) {
     this.ship = data?.ship
@@ -29,6 +32,16 @@ class Crew {
     this.specialists = new Map<string, Specialization>()
     this.starboard = []
     this.larboard = []
+
+    if (data?.provisions) {
+      this.provisions = data.provisions
+    } else {
+      const defs = loadProvisions()
+      this.provisions = {}
+      for (const key in defs) {
+        this.provisions[key] = { store: 0, rationing: 1, skip: false }
+      }
+    }
 
     if (data?.specialists) {
       for (const key in data.specialists) {

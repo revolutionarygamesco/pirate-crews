@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach, type Mock } from 'vitest'
 import { mockActor } from '@revolutionarygamesco/common-foundryvtt/mocks'
 import { getID } from '@revolutionarygamesco/common-foundryvtt'
 import setupRanger from '../ranger.ts'
@@ -17,6 +17,17 @@ vi.mock('./foundry/load.ts', () => ({
 }))
 
 describe('Crew', () => {
+  const originalSettings = game.settings
+
+  beforeEach(() => {
+    const get = vi.fn(() => undefined)
+    game.settings = { get } as unknown as foundry.Game['settings']
+  })
+
+  afterEach(() => {
+    game.settings = originalSettings
+  })
+
   describe('constructor', () => {
     it('creates a crew', () => {
       expect(new Crew()).toBeInstanceOf(Crew)
@@ -52,6 +63,16 @@ describe('Crew', () => {
       const crew = new Crew(data)
       expect(crew.starboard).toHaveLength(1)
       expect(crew.larboard).toHaveLength(1)
+    })
+
+    it('loads provisions', () => {
+      const { crew: data } = setupRanger('Item')
+      const crew = new Crew(data)
+      for (const key of ['food', 'water', 'rum']) {
+        expect(crew.provisions[key].store).toBe(0)
+        expect(crew.provisions[key].rationing).toBe(1)
+        expect(crew.provisions[key].skip).toBe(false)
+      }
     })
   })
 

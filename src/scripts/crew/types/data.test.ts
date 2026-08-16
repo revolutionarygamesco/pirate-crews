@@ -12,7 +12,8 @@ describe('isCrewData', () => {
     expect(isCrewData({
       specialists: {},
       starboard: [],
-      larboard: []
+      larboard: [],
+      provisions: {}
     })).toBe(true)
   })
 })
