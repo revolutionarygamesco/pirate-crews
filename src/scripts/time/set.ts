@@ -1,6 +1,7 @@
 import { type Watch } from './types/watch.ts'
 import { createWatchSetData, type WatchSetData } from './types/set.ts'
 import { type WatchInstance } from './types/instance.ts'
+import getOtherTeam from '../crew/methods/other-team.ts'
 import isInWatchInstance from './methods/in-instance.ts'
 
 export default class WatchSet {
@@ -19,11 +20,14 @@ export default class WatchSet {
 
   getInstances (timestamp: number): WatchInstance[] {
     const day = Math.floor((timestamp - this.offset) / this.dayLength)
+    const before = day * this.watches.length
     let start = (day * this.dayLength) + this.offset
     const instances: WatchInstance[] = []
 
-    for (const watch of this.watches) {
-      instances.push({ ...watch, start, end: start + watch.duration })
+    for (const [index, watch] of this.watches.entries()) {
+      const n = before + index
+      const team = n % 2 === 1 ? 'starboard' : 'larboard'
+      instances.push({ ...watch, start, end: start + watch.duration, team })
       start += watch.duration
     }
 
@@ -43,12 +47,14 @@ export default class WatchSet {
     const instances: WatchInstance[] = [first]
     let timestamp = first.end
     let index = this.watches.findIndex(watch => watch.name === first.name)
+    let team = first.team
     if (index < 0) return instances
 
     while (timestamp < end) {
       index++
+      team = getOtherTeam(team)
       const watch = this.watches[index % this.watches.length]
-      instances.push({ ...watch, start: timestamp, end: timestamp + watch.duration })
+      instances.push({ ...watch, start: timestamp, end: timestamp + watch.duration, team })
       timestamp += watch.duration
     }
 

@@ -1,9 +1,11 @@
 import { isNumber, makeArrayGuard } from '@revolutionarygamesco/common'
+import { isWatchTeam, type WatchTeam } from '../../crew/types/team.ts'
 import { type Watch, createWatch, isWatch } from './watch.ts'
 
 export interface WatchInstance extends Watch {
   start: number
   end: number
+  team: WatchTeam
 }
 
 export const createWatchInstance = (
@@ -14,6 +16,7 @@ export const createWatchInstance = (
     ...watch,
     start: 0,
     end: watch.duration,
+    team: 'starboard',
     ...overrides
   }
 }
@@ -25,7 +28,8 @@ export const isWatchInstance = (
   const obj = candidate as Watch & Record<string, unknown>
   return [
     isNumber(obj.start),
-    isNumber(obj.end)
+    isNumber(obj.end),
+    isWatchTeam(obj.team)
   ].every(test => test === true)
 }
 

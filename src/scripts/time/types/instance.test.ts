@@ -7,6 +7,7 @@ describe('createWatchInstance', () => {
   const duration = 5000
   const start = 0
   const end = 1000
+  const team = 'starboard'
 
   it('creates a watch instance object', () => {
     const instance = createWatchInstance()
@@ -33,12 +34,18 @@ describe('createWatchInstance', () => {
     expect(instance.end).toBe(end)
   })
 
+  it('can set the watch team', () => {
+    const instance = createWatchInstance({ team })
+    expect(instance.team).toBe(team)
+  })
+
   it('can set all at once', () => {
-    const instance = createWatchInstance({ name, duration, start, end })
+    const instance = createWatchInstance({ name, duration, start, end, team })
     expect(instance.name).toBe(name)
     expect(instance.duration).toBe(duration)
     expect(instance.start).toBe(start)
     expect(instance.end).toBe(end)
+    expect(instance.team).toBe(team)
   })
 })
 
