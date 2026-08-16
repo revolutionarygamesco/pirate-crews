@@ -1,22 +1,12 @@
-import { getObjectRecord } from '@revolutionarygamesco/common'
 import { scopeLocalizer } from '@revolutionarygamesco/common-foundryvtt'
 import { MODULE_ID } from '../../settings.ts'
-import {
-  createSpecializationDefinitionFromKey,
-  isSpecializationDefinition,
-  type SpecializationDefinition
-} from '../types/specialization.ts'
+import { isSpecializationDefinitions, createSpecializationDefinitions } from '../types/definitions.ts'
 
 const registerSpecializationSettings = (): void => {
   const t = scopeLocalizer([MODULE_ID, 'settings', 'specialization'].join('.'))
   const name = t('name')
   const hint = t('hint')
-  const keys = ['captain', 'quartermaster', 'master', 'master-mate', 'bosun',
-    'bosun-mate', 'gunner', 'gunner-mate', 'carpenter', 'carpenter-mate',
-    'surgeon', 'surgeon-mate', 'cooper', 'cooper-mate', 'armorer',
-    'armorer-mate', 'sailmaker', 'sailmaker-mate', 'cook']
-  const initial: Record<string, SpecializationDefinition> = {}
-  for (const key of keys) initial[key] = createSpecializationDefinitionFromKey(key)
+  const initial = createSpecializationDefinitions()
 
   const type = new foundry.data.fields.JSONField({
     gmOnly: true,
@@ -26,11 +16,7 @@ const registerSpecializationSettings = (): void => {
     nullable: true,
     persisted: true,
     required: true,
-    validate: (candidate: any) => {
-      const obj = getObjectRecord(candidate)
-      if (!obj) return false
-      return Object.keys(obj).every(key => isSpecializationDefinition(obj[key]))
-    },
+    validate: isSpecializationDefinitions,
     validationError: t('error'),
   })
 
