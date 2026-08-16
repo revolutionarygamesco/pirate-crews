@@ -1,9 +1,11 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest'
 import { mockActor } from '@revolutionarygamesco/common-foundryvtt/mocks'
+import { getID } from '@revolutionarygamesco/common-foundryvtt'
 import setupRanger from '../ranger.ts'
 import { createSpecializationDefinitions } from './types/definitions.ts'
 import WatchSet from '../time/set.ts'
-import Crew from './crew.ts'
+import Crew, { type Permission } from './crew.ts'
+import { generateID } from '@revolutionarygamesco/common-foundryvtt'
 
 const worldTimeMock = vi.fn()
 game.time = { get worldTime () { return worldTimeMock() } } as unknown as foundry.helpers.GameTime
@@ -216,6 +218,85 @@ describe('Crew', () => {
         crew.decommission('quartermaster')
         expect(crew.specialists.has('quartermaster')).toBe(false)
         expect(crew.starboard).toHaveLength(2)
+      })
+    })
+
+    describe('canEdit', () => {
+      let captain: foundry.documents.Actor
+      let quartermaster: foundry.documents.Actor
+      let master: foundry.documents.Actor
+
+      beforeEach(async () => {
+        master = mockActor({ name: 'John Doe' })
+        game.actors.set(getID(master.uuid!), master)
+        crew.specialists.set('master', { title: 'Sailing Master', required: true, actor: master.uuid! })
+        captain = crew.getSpecialist('captain')!
+        quartermaster = crew.getSpecialist('quartermaster')!
+
+        captain.testUserPermission = vi.fn().mockReturnValue(false)
+        quartermaster.testUserPermission = vi.fn().mockReturnValue(false)
+        master.testUserPermission = vi.fn().mockReturnValue(false)
+
+        vi.stubGlobal('game', { ...game, user: { id: generateID(), name: 'Test User', isGM: false } })
+      })
+
+      it.each([
+        ['the ship', 'ship'],
+        ['the articles of agreement', 'articles'],
+        ['crew assignments', 'crew'],
+        ['provisions', 'provisions'],
+        ['the ship’s course', 'navigation'],
+        ['the captain’s exploits', 'exploits']
+      ] as Array<[string, Permission]>)('grants GM permission to edit %s', (_desc, key) => {
+        vi.stubGlobal('game', { ...game, user: { id: generateID(), name: 'Test User', isGM: true } })
+        expect(crew.canEdit(key)).toBe(true)
+      })
+
+      it.each([
+        ['grants', 'the ship', 'ship'],
+        ['denies', 'the articles of agreement', 'articles'],
+        ['grants', 'crew assignments', 'crew'],
+        ['grants', 'provisions', 'provisions'],
+        ['grants', 'the ship’s course', 'navigation'],
+        ['grants', 'the captain’s exploits', 'exploits']
+      ] as Array<[string, string, Permission]>)('%s the captain permission to edit %s', (expected, _desc, key) => {
+        (captain.testUserPermission as Mock).mockReturnValue(true)
+        expect(crew.canEdit(key)).toBe(expected === 'grants')
+      })
+
+      it.each([
+        ['denies', 'the ship', 'ship'],
+        ['denies', 'the articles of agreement', 'articles'],
+        ['grants', 'crew assignments', 'crew'],
+        ['grants', 'provisions', 'provisions'],
+        ['denies', 'the ship’s course', 'navigation'],
+        ['denies', 'the captain’s exploits', 'exploits']
+      ] as Array<[string, string, Permission]>)('%s the quartermaster permission to edit %s', (expected, _desc, key) => {
+        (quartermaster.testUserPermission as Mock).mockReturnValue(true)
+        expect(crew.canEdit(key)).toBe(expected === 'grants')
+      })
+
+      it.each([
+        ['denies', 'the ship', 'ship'],
+        ['denies', 'the articles of agreement', 'articles'],
+        ['denies', 'crew assignments', 'crew'],
+        ['denies', 'provisions', 'provisions'],
+        ['grants', 'the ship’s course', 'navigation'],
+        ['denies', 'the captain’s exploits', 'exploits']
+      ] as Array<[string, string, Permission]>)('%s the sailing master permission to edit %s', (expected, _desc, key) => {
+        (master.testUserPermission as Mock).mockReturnValue(true)
+        expect(crew.canEdit(key)).toBe(expected === 'grants')
+      })
+
+      it.each([
+        ['denies', 'the ship', 'ship'],
+        ['denies', 'the articles of agreement', 'articles'],
+        ['denies', 'crew assignments', 'crew'],
+        ['denies', 'provisions', 'provisions'],
+        ['denies', 'the ship’s course', 'navigation'],
+        ['denies', 'the captain’s exploits', 'exploits']
+      ] as Array<[string, string, Permission]>)('%s anyone else permission to edit %s', (expected, _desc, key) => {
+        expect(crew.canEdit(key)).toBe(expected === 'grants')
       })
     })
   })

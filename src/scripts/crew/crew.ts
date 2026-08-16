@@ -8,6 +8,8 @@ import getOtherTeam from './methods/other-team.ts'
 import loadSpecializationDefinitions from './foundry/load.ts'
 import loadWatches from '../time/foundry/load.ts'
 
+export type Permission = 'ship' | 'articles' | 'crew' | 'provisions' | 'navigation' | 'exploits'
+
 class Crew {
   ship?: foundry.documents.Actor | foundry.documents.Item
   articles?: foundry.documents.JournalEntry
@@ -158,6 +160,27 @@ class Crew {
     const bigger = this.larboard.length < this.starboard.length
       ? 'larboard' : 'starboard'
     this[bigger].push(actor)
+  }
+
+  canEdit (
+    permission: Permission
+  ): boolean {
+    if (game.user.isGM) return true
+
+    const isCaptain = this.getSpecialist('captain')?.testUserPermission(game.user, 3) ?? false
+    const isQuartermaster = this.getSpecialist('quartermaster')?.testUserPermission(game.user, 3) ?? false
+    const isMaster = this.getSpecialist('master')?.testUserPermission(game.user, 3) ?? false
+
+    const permissions: Record<Permission, boolean> = {
+      ship: isCaptain,
+      articles: false,
+      crew: isCaptain || isQuartermaster,
+      provisions: isCaptain || isQuartermaster,
+      navigation: isCaptain || isMaster,
+      exploits: isCaptain
+    }
+
+    return permissions[permission]
   }
 
   protected getWatch (): WatchInstance {
