@@ -1,6 +1,7 @@
 import { scopeLocalizer } from '@revolutionarygamesco/common-foundryvtt'
 import { MODULE_ID } from '../settings.ts'
 import { type ProvisionsData } from './types/provisions.ts'
+import type Crew from '../crew/crew.ts'
 import loadProvisions from './foundry/load.ts'
 
 export interface RationingOption {
@@ -11,15 +12,38 @@ export interface RationingOption {
 
 class Provisions {
   data: ProvisionsData
+  crew?: Crew
 
-  constructor (data?: ProvisionsData) {
+  constructor (
+    data?: ProvisionsData,
+    crew?: Crew
+  ) {
     this.data = data ?? {}
+    this.crew = crew
     if (!data) {
       const defs = loadProvisions()
       for (const key in defs) {
         this.data[key] = { store: 0, rationing: 1, skip: false }
       }
     }
+  }
+
+  estimate (crew?: Crew): Record<string, number> {
+    const estimates: Record<string, number> = {}
+    const c = crew ?? this.crew
+    const n = c ? c.count : 0
+    if (n === 0) return estimates
+
+    const defs = loadProvisions()
+    for (const key in this.data) {
+      const { store, rationing, skip } = this.data[key]
+      const rate = defs[key].consumption ?? 1
+      const perDiem = rate * n * rationing
+      const skipBonus = skip ? 1 : 0
+      estimates[key] = Math.floor(store / perDiem) + skipBonus
+    }
+
+    return estimates
   }
 
   getRationingOptions (key: string): RationingOption[] {

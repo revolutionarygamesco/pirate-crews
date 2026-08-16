@@ -1,7 +1,9 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { mockLocalize } from '@revolutionarygamesco/common-foundryvtt/mocks'
 import { MODULE_ID } from '../settings.ts'
+import setupRanger from '../ranger.ts'
 import { createProvisionsData, isProvisionsData } from './types/provisions.ts'
+import Crew from '../crew/crew.ts'
 import Provisions from './provisions.ts'
 
 describe('Provisions', () => {
@@ -39,6 +41,45 @@ describe('Provisions', () => {
   })
 
   describe('Instance methods', () => {
+    describe('estimate', () => {
+      let crew: Crew
+      let provisions: Provisions
+
+      beforeEach(() => {
+        const { crew: data } = setupRanger()
+        crew = new Crew(data)
+        provisions = new Provisions(undefined, crew)
+      })
+
+      it('estimates the number of days left', () => {
+        provisions.data.food.store = 40
+        provisions.data.water.store = 2
+        provisions.data.rum.store = 0
+
+        const {  food, water, rum } = provisions.estimate()
+        expect(food).toBe(10)
+        expect(water).toBe(0)
+        expect(rum).toBe(0)
+      })
+
+      it('factors in rationing', () => {
+        provisions.data.food = { store: 40, rationing: 1, skip: false }
+        provisions.data.water = { store: 2, rationing: 0.5, skip: false }
+        provisions.data.rum = { store: 0, rationing: 1, skip: false }
+
+        const {  food, water, rum } = provisions.estimate()
+        expect(food).toBe(10)
+        expect(water).toBe(1)
+        expect(rum).toBe(0)
+      })
+
+      it('adds an extra day for skip', () => {
+        provisions.data.food = { store: 40, rationing: 1, skip: true }
+        const {  food } = provisions.estimate()
+        expect(food).toBe(11)
+      })
+    })
+
     describe('getRationingOptions', () => {
       beforeEach(() => {
         const dict: Record<string, string> = {}
