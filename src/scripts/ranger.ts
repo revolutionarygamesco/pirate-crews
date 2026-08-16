@@ -38,8 +38,8 @@ const setupRanger = (
   crew.articles = articles.uuid!
   crew.specialists.captain = createSpecialization({ title: 'Captain', actor: charles.uuid! })
   crew.specialists.quartermaster = createSpecialization({ title: 'Quartermaster', actor: jack.uuid! })
-  crew.starboard = [anne.uuid!]
-  crew.larboard = [mary.uuid!]
+  crew.teams.starboard = [anne.uuid!]
+  crew.teams.larboard = [mary.uuid!]
 
   mockFromUuid({
     [actor.uuid!]: actor,
