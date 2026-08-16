@@ -78,6 +78,14 @@ class Crew {
     return this.all.length
   }
 
+  getSpecialist (key: string): foundry.documents.Actor | null {
+    if (!this.specialists.has(key)) return null
+    const spec = this.specialists.get(key)
+    const uuid = spec?.actor
+    const actor = game.actors.get(getID(uuid ?? ''))
+    return actor ?? null
+  }
+
   getRandomMember (): foundry.documents.Actor {
     return selectRandomElement(this.all)
   }
@@ -143,7 +151,7 @@ class Crew {
     const prev = this.specialists.get(key)
     if (!prev) return
 
-    const actor = game.actors.get(getID(prev.actor ?? ''))
+    const actor = this.getSpecialist(key)
     if (!actor) return
 
     this.specialists.delete(key)

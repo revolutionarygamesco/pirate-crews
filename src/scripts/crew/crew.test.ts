@@ -118,6 +118,23 @@ describe('Crew', () => {
       crew = new Crew(data)
     })
 
+    describe('getSpecialist', () => {
+      it('returns the actor assigned to that role', () => {
+        const actual = crew.getSpecialist('captain')
+        expect(actual?.name).toBe('Charles Vane')
+      })
+
+      it('returns null if no one is assigned to that role', () => {
+        const actual = crew.getSpecialist('gunner')
+        expect(actual).toBeNull()
+      })
+
+      it('returns null if the role does not exist', () => {
+        const actual = crew.getSpecialist('programmer')
+        expect(actual).toBeNull()
+      })
+    })
+
     describe('getRandomMember', () => {
       it('returns a random member of the crew', () => {
         const expected = ['Charles Vane', '“Calico” Jack Rackham', 'Anne Bonny', 'Mary Read']
