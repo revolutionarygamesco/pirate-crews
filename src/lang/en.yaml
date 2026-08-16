@@ -40,3 +40,16 @@ revolutionary-piratecrews:
     sailmaker: Sailmaker
     sailmaker-mate: Sailmaker’s Mate
     cook: Cook
+  provisions:
+    food:
+      label: Vittles
+      unit: ration
+      units: rations
+    water:
+      label: Water
+      unit: ration
+      units: rations
+    rum:
+      label: Rum
+      unit: ration
+      units: rations
