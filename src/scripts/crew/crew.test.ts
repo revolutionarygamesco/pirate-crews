@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach, afterEach, type Mock } from 'vitest'
 import { mockActor } from '@revolutionarygamesco/common-foundryvtt/mocks'
-import { getID } from '@revolutionarygamesco/common-foundryvtt'
+import { getID, generateID } from '@revolutionarygamesco/common-foundryvtt'
+import { isCrewData } from './types/data.ts'
 import setupRanger from '../ranger.ts'
 import { createSpecializationDefinitions } from './types/definitions.ts'
 import WatchSet from '../time/set.ts'
 import Crew, { type Permission } from './crew.ts'
-import { generateID } from '@revolutionarygamesco/common-foundryvtt'
 
 const worldTimeMock = vi.fn()
 game.time = { get worldTime () { return worldTimeMock() } } as unknown as foundry.helpers.GameTime
@@ -318,6 +318,12 @@ describe('Crew', () => {
         ['denies', 'the captain’s exploits', 'exploits']
       ] as Array<[string, string, Permission]>)('%s anyone else permission to edit %s', (expected, _desc, key) => {
         expect(crew.canEdit(key)).toBe(expected === 'grants')
+      })
+    })
+
+    describe('toObject', () => {
+      it('returns a CrewData object', () => {
+        expect(isCrewData(crew.toObject())).toBe(true)
       })
     })
   })

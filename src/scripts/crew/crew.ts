@@ -196,6 +196,20 @@ class Crew {
     return permissions[permission]
   }
 
+  toObject (): CrewData {
+    const obj: CrewData = {
+      specialists: Object.fromEntries(this.specialists),
+      starboard: this.starboard.map(actor => actor.uuid).filter(uuid => uuid !== null),
+      larboard: this.larboard.map(actor => actor.uuid).filter(uuid => uuid !== null),
+      provisions: this.provisions
+    }
+
+    if (this.ship?.uuid) obj.ship = this.ship.uuid
+    if (this.articles?.uuid) obj.articles = this.articles.uuid
+
+    return obj
+  }
+
   protected getWatch (): WatchInstance {
     const set = loadWatches()
     return set.getCurrent(game.time.worldTime)
