@@ -18,7 +18,7 @@ interface CrewTestData {
 }
 
 const setupRanger = (
-  shipType: 'Actor' | 'Item',
+  shipType: 'Actor' | 'Item' = 'Item',
   shipSubType?: string
 ): CrewTestData => {
   const crew = createCrewData()
