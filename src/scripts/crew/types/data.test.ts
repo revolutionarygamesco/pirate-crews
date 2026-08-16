@@ -11,11 +11,8 @@ describe('isCrewData', () => {
   it('accepts crew data', () => {
     expect(isCrewData({
       specialists: {},
-      teams: {
-        starboard: [],
-        larboard: [],
-        onDuty: 'starboard'
-      }
+      starboard: [],
+      larboard: []
     })).toBe(true)
   })
 })

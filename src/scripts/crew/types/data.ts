@@ -1,12 +1,12 @@
-import { getObjectRecord, isOptionalString } from '@revolutionarygamesco/common'
-import { isCrewTeams, type CrewTeams, createCrewTeams } from './teams.ts'
+import { getObjectRecord, isOptionalString, isStringArray } from '@revolutionarygamesco/common'
 import { isSpecializations, type Specializations } from './specializations.ts'
 
 export interface CrewData {
   ship?: string
   articles?: string
   specialists: Specializations
-  teams: CrewTeams
+  starboard: string[]
+  larboard: string[]
 }
 
 export const isCrewData = (
@@ -18,7 +18,8 @@ export const isCrewData = (
     isOptionalString(obj.ship),
     isOptionalString(obj.articles),
     isSpecializations(obj.specialists),
-    isCrewTeams(obj.teams)
+    isStringArray(obj.starboard),
+    isStringArray(obj.larboard)
   ].every(test => test)
 }
 
@@ -27,7 +28,8 @@ export const createCrewData = (
 ): CrewData => {
   return {
     specialists: {},
-    teams: createCrewTeams(overrides?.teams),
+    starboard: [],
+    larboard: [],
     ...overrides
   }
 }

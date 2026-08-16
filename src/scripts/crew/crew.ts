@@ -37,8 +37,8 @@ class Crew {
     }
 
     const teams: Array<{ src: string[], dest: foundry.documents.Actor[] }> = [
-      { src: data?.teams?.starboard ?? [], dest: this.starboard },
-      { src: data?.teams?.larboard ?? [], dest: this.larboard }
+      { src: data?.starboard ?? [], dest: this.starboard },
+      { src: data?.larboard ?? [], dest: this.larboard }
     ]
 
     for (const { src, dest } of teams) {
