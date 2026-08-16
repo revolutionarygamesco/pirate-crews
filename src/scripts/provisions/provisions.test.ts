@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
-import { createProvisionsData } from './types/provisions.ts'
+import { createProvisionsData, isProvisionsData } from './types/provisions.ts'
 import Provisions from './provisions.ts'
 
 describe('Provisions', () => {
@@ -33,6 +33,15 @@ describe('Provisions', () => {
         expect(actual.data[key].rationing).toBe(1)
         expect(actual.data[key].skip).toBe(false)
       }
+    })
+  })
+
+  describe('Instance methods', () => {
+    describe('toObject', () => {
+      it('returns a ProvisionsData object', () => {
+        const actual = new Provisions()
+        expect(isProvisionsData(actual.toObject())).toBe(true)
+      })
     })
   })
 })

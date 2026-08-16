@@ -13,6 +13,10 @@ class Provisions {
       }
     }
   }
+
+  toObject () {
+    return this.data
+  }
 }
 
 export default Provisions
