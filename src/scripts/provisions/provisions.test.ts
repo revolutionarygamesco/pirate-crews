@@ -109,6 +109,45 @@ describe('Provisions', () => {
       })
     })
 
+    describe('consume', () => {
+      let crew: Crew
+      let provisions: Provisions
+
+      beforeEach(() => {
+        const { crew: data } = setupRanger()
+        crew = new Crew(data)
+        provisions = new Provisions(undefined, crew)
+      })
+
+      it('consumes stores', () => {
+        provisions.data.food.store = 40
+        provisions.data.water.store = 2
+        provisions.data.rum.store = 0
+
+        provisions.consume()
+        expect(provisions.data.food.store).toBe(36)
+        expect(provisions.data.water.store).toBe(0)
+        expect(provisions.data.rum.store).toBe(0)
+      })
+
+      it('factors in rationing', () => {
+        provisions.data.food = { store: 40, rationing: 1, skip: false }
+        provisions.data.water = { store: 10, rationing: 0.5, skip: false }
+        provisions.data.rum = { store: 6, rationing: 2, skip: false }
+
+        provisions.consume()
+        expect(provisions.data.food.store).toBe(36)
+        expect(provisions.data.water.store).toBe(8)
+        expect(provisions.data.rum.store).toBe(0)
+      })
+
+      it('skips', () => {
+        provisions.data.food = { store: 40, rationing: 1, skip: true }
+        provisions.consume()
+        expect(provisions.data.food).toEqual({ store: 40, rationing: 1, skip: false })
+      })
+    })
+
     describe('getRationingOptions', () => {
       beforeEach(() => {
         const dict: Record<string, string> = {}

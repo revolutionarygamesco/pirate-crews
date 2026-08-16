@@ -59,6 +59,17 @@ class Provisions {
     return estimates
   }
 
+  consume (crew?: Crew): void {
+    const perDiem = this.perDiem(crew)
+    for (const key in perDiem) {
+      if (this.data[key].skip) {
+        this.data[key].skip = false
+      } else {
+        this.data[key].store = Math.max(this.data[key].store - perDiem[key], 0)
+      }
+    }
+  }
+
   getRationingOptions (key: string): RationingOption[] {
     const path = [MODULE_ID, 'provisions', 'rationing']
     const t = scopeLocalizer(path.join('.'))
