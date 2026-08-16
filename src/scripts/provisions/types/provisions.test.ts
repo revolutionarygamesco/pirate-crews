@@ -1,20 +1,20 @@
 import { describe, it, expect } from 'vitest'
 import { getPrimitivesExcept } from '@revolutionarygamesco/common/testing'
-import { isProvisions, createProvisions } from './provisions.ts'
+import { isProvisionsData, createProvisionsData } from './provisions.ts'
 
-describe('isProvisions', () => {
+describe('isProvisionsData', () => {
   it.each([
     ...getPrimitivesExcept('an empty object')
   ])('rejects %s', (_label, value) => {
-    expect(isProvisions(value)).toBe(false)
+    expect(isProvisionsData(value)).toBe(false)
   })
 
   it('accepts an empty object', () => {
-    expect(isProvisions({})).toBe(true)
+    expect(isProvisionsData({})).toBe(true)
   })
 
   it('accepts a record of provisions', () => {
-    expect(isProvisions({
+    expect(isProvisionsData({
       food: {
         store: 30,
         rationing: 1,
@@ -26,8 +26,8 @@ describe('isProvisions', () => {
 
 describe('createProvisions', () => {
   it('creates a provision record', () => {
-    const actual = createProvisions()
-    expect(isProvisions(actual)).toBe(true)
+    const actual = createProvisionsData()
+    expect(isProvisionsData(actual)).toBe(true)
     for (const key of ['food', 'water', 'rum']) expect(actual[key]).toBeDefined()
   })
 })

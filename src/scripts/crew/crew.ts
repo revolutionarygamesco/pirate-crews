@@ -1,7 +1,7 @@
 import { selectRandomElement, isString } from '@revolutionarygamesco/common'
 import { getID } from '@revolutionarygamesco/common-foundryvtt'
 import { type CrewData } from './types/data.ts'
-import { type Provisions } from '../provisions/types/provisions.ts'
+import { type ProvisionsData } from '../provisions/types/provisions.ts'
 import { type Specialization } from './types/specialization.ts'
 import { type WatchInstance } from '../time/types/instance.ts'
 import { isWatchTeam, type WatchTeam } from './types/team.ts'
@@ -18,7 +18,7 @@ class Crew {
   specialists: Map<string, Specialization>
   starboard: foundry.documents.Actor[]
   larboard: foundry.documents.Actor[]
-  provisions: Provisions
+  provisions: ProvisionsData
 
   constructor (data?: Partial<CrewData>) {
     this.ship = data?.ship

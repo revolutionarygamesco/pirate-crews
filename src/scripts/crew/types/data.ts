@@ -1,6 +1,6 @@
 import { getObjectRecord, isOptionalString, isStringArray } from '@revolutionarygamesco/common'
 import { isSpecializations, type Specializations } from './specializations.ts'
-import { isProvisions, createProvisions, type Provisions } from '../../provisions/types/provisions.ts'
+import { isProvisionsData, createProvisionsData, type ProvisionsData } from '../../provisions/types/provisions.ts'
 
 export interface CrewData {
   ship?: string
@@ -8,7 +8,7 @@ export interface CrewData {
   specialists: Specializations
   starboard: string[]
   larboard: string[]
-  provisions: Provisions
+  provisions: ProvisionsData
 }
 
 export const isCrewData = (
@@ -22,7 +22,7 @@ export const isCrewData = (
     isSpecializations(obj.specialists),
     isStringArray(obj.starboard),
     isStringArray(obj.larboard),
-    isProvisions(obj.provisions)
+    isProvisionsData(obj.provisions)
   ].every(test => test)
 }
 
@@ -33,7 +33,7 @@ export const createCrewData = (
     specialists: {},
     starboard: [],
     larboard: [],
-    provisions: createProvisions(overrides?.provisions),
+    provisions: createProvisionsData(overrides?.provisions),
     ...overrides
   }
 }
