@@ -28,19 +28,32 @@ class Provisions {
     }
   }
 
+  perDiem (crew?: Crew): Record<string, number> {
+    const perDiem: Record<string, number> = {}
+    const c = crew ?? this.crew
+    const n = c ? c.count : 0
+    if (n === 0) return perDiem
+
+    const defs = loadProvisions()
+    for (const key in this.data) {
+      const rate = defs[key].consumption ?? 1
+      perDiem[key] = rate * n * this.data[key].rationing
+    }
+
+    return perDiem
+  }
+
   estimate (crew?: Crew): Record<string, number> {
     const estimates: Record<string, number> = {}
     const c = crew ?? this.crew
     const n = c ? c.count : 0
     if (n === 0) return estimates
 
-    const defs = loadProvisions()
+    const perDiem = this.perDiem(crew)
     for (const key in this.data) {
-      const { store, rationing, skip } = this.data[key]
-      const rate = defs[key].consumption ?? 1
-      const perDiem = rate * n * rationing
+      const { store, skip } = this.data[key]
       const skipBonus = skip ? 1 : 0
-      estimates[key] = Math.floor(store / perDiem) + skipBonus
+      estimates[key] = Math.floor(store / perDiem[key]) + skipBonus
     }
 
     return estimates

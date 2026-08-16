@@ -41,6 +41,35 @@ describe('Provisions', () => {
   })
 
   describe('Instance methods', () => {
+    describe('perDiem', () => {
+      let crew: Crew
+      let provisions: Provisions
+
+      beforeEach(() => {
+        const { crew: data } = setupRanger()
+        crew = new Crew(data)
+        provisions = new Provisions(undefined, crew)
+      })
+
+      it('returns the number of units consumed per day', () => {
+        const {  food, water, rum } = provisions.perDiem()
+        expect(food).toBe(4)
+        expect(water).toBe(4)
+        expect(rum).toBe(4)
+      })
+
+      it('factors in rationing', () => {
+        provisions.data.food = { store: 40, rationing: 1, skip: false }
+        provisions.data.water = { store: 2, rationing: 0.5, skip: false }
+        provisions.data.rum = { store: 0, rationing: 1, skip: false }
+
+        const {  food, water, rum } = provisions.perDiem()
+        expect(food).toBe(4)
+        expect(water).toBe(2)
+        expect(rum).toBe(4)
+      })
+    })
+
     describe('estimate', () => {
       let crew: Crew
       let provisions: Provisions
