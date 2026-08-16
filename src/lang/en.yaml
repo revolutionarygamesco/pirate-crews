@@ -53,3 +53,9 @@ revolutionary-piratecrews:
       label: Rum
       unit: ration
       units: rations
+    rationing:
+      double: Double rations
+      normal: Normal rations
+      half: Half rations
+      quarter: Quarter rations
+      none: No rations

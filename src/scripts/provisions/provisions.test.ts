@@ -1,4 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
+import { mockLocalize } from '@revolutionarygamesco/common-foundryvtt/mocks'
+import { MODULE_ID } from '../settings.ts'
 import { createProvisionsData, isProvisionsData } from './types/provisions.ts'
 import Provisions from './provisions.ts'
 
@@ -37,6 +39,33 @@ describe('Provisions', () => {
   })
 
   describe('Instance methods', () => {
+    describe('getRationingOptions', () => {
+      beforeEach(() => {
+        const dict: Record<string, string> = {}
+        dict[`${MODULE_ID}.provisions.rationing.double`] = 'Double rations'
+        dict[`${MODULE_ID}.provisions.rationing.normal`] = 'Normal rations'
+        dict[`${MODULE_ID}.provisions.rationing.half`] = 'Half rations'
+        dict[`${MODULE_ID}.provisions.rationing.quarter`] = 'Quarter rations'
+        dict[`${MODULE_ID}.provisions.rationing.none`] = 'No rations'
+        mockLocalize(dict)
+      })
+
+      it.each([
+        2, 1, 0.5, 0.25, 0
+      ])('selects current value when set to %d', (value) => {
+        const provisions = new Provisions()
+        provisions.data.food.rationing = value
+        const actual = provisions.getRationingOptions('food')
+        expect(actual).toEqual([
+          { value: 2, label: 'Double rations', selected: value === 2 },
+          { value: 1, label: 'Normal rations', selected: value === 1 },
+          { value: 0.5, label: 'Half rations', selected: value === 0.5 },
+          { value: 0.25, label: 'Quarter rations', selected: value === 0.25 },
+          { value: 0, label: 'No rations', selected: value === 0 }
+        ])
+      })
+    })
+
     describe('toObject', () => {
       it('returns a ProvisionsData object', () => {
         const actual = new Provisions()
