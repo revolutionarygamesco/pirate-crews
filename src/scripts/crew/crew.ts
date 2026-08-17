@@ -118,6 +118,19 @@ class Crew {
     return record
   }
 
+  get shareBands (): Array<{ shares: number, titles: string[] }> {
+    const data = new Map<number, string[]>()
+    const specs = this.specialists.values().toArray()
+    for (const { title, shares } of specs) {
+      if (shares === 1 || shares === undefined) continue
+      const arr = data.get(shares) ?? []
+      data.set(shares, [...arr, title])
+    }
+    return data.entries().toArray().map(([shares, titles]) => {
+      return { shares, titles }
+    })
+  }
+
   getSpecialist (key: string): foundry.documents.Actor | null {
     if (!this.specialists.has(key)) return null
     const spec = this.specialists.get(key)

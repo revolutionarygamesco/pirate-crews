@@ -156,6 +156,15 @@ describe('Crew', () => {
         expect(crew.shares.total).toBe(6)
       })
     })
+
+    describe('shareBands', () => {
+      it('returns the crew’s share bands', () => {
+        const actual = crew.shareBands
+        expect(actual).toEqual([
+          { shares: 2, titles: ['Captain', 'Quartermaster'] }
+        ])
+      })
+    })
   })
 
   describe('Instance methods', () => {
