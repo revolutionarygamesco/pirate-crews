@@ -103,6 +103,21 @@ class Crew {
     return this.all.length
   }
 
+  get shares (): Record<string, number> {
+    const specs = Array.from(this.specialists.values())
+    const uuids = this.uuids
+    const record: Record<string, number> = { total: 0 }
+
+    for (const uuid of uuids) {
+      record[uuid] = 1
+      for (const {  actor, shares } of specs) {
+        if (actor === uuid && shares && shares > record[uuid]) record[uuid] = shares
+      }
+      record.total += record[uuid]
+    }
+    return record
+  }
+
   getSpecialist (key: string): foundry.documents.Actor | null {
     if (!this.specialists.has(key)) return null
     const spec = this.specialists.get(key)
@@ -183,21 +198,6 @@ class Crew {
     const bigger = this.larboard.length < this.starboard.length
       ? 'larboard' : 'starboard'
     this[bigger].push(actor)
-  }
-
-  getShares (): Record<string, number> {
-    const specs = Array.from(this.specialists.values())
-    const uuids = this.uuids
-    const record: Record<string, number> = { total: 0 }
-
-    for (const uuid of uuids) {
-      record[uuid] = 1
-      for (const {  actor, shares } of specs) {
-        if (actor === uuid && shares && shares > record[uuid]) record[uuid] = shares
-      }
-      record.total += record[uuid]
-    }
-    return record
   }
 
   canEdit (
