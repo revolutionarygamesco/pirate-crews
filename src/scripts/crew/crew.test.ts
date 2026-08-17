@@ -5,6 +5,7 @@ import setupRanger from '../ranger.ts'
 import { isCrewData } from './types/data.ts'
 import { createSpecializationDefinitions } from './types/definitions.ts'
 import WatchSet from '../time/set.ts'
+import Provisions from '../provisions/provisions.ts'
 import Crew, { type Permission } from './crew.ts'
 
 const worldTimeMock = vi.fn()
@@ -65,14 +66,9 @@ describe('Crew', () => {
       expect(crew.larboard).toHaveLength(1)
     })
 
-    it('loads provisions', () => {
-      const { crew: data } = setupRanger('Item')
-      const crew = new Crew(data)
-      for (const key of ['food', 'water', 'rum']) {
-        expect(crew.provisions[key].store).toBe(0)
-        expect(crew.provisions[key].rationing).toBe(1)
-        expect(crew.provisions[key].skip).toBe(false)
-      }
+    it('has provisions', () => {
+      const crew = new Crew()
+      expect(crew.provisions).toBeInstanceOf(Provisions)
     })
   })
 

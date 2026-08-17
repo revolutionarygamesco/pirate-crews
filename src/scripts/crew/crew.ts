@@ -1,13 +1,12 @@
 import { selectRandomElement, isString } from '@revolutionarygamesco/common'
 import { getID } from '@revolutionarygamesco/common-foundryvtt'
 import { type CrewData } from './types/data.ts'
-import { type ProvisionsData } from '../provisions/types/provisions.ts'
 import { type Specialization } from './types/specialization.ts'
 import { type WatchInstance } from '../time/types/instance.ts'
 import { isWatchTeam, type WatchTeam } from './types/team.ts'
+import Provisions from '../provisions/provisions.ts'
 import getOtherTeam from './methods/other-team.ts'
 import loadSpecializationDefinitions from './foundry/load.ts'
-import loadProvisions from '../provisions/foundry/load.ts'
 import loadWatches from '../time/foundry/load.ts'
 
 export type Permission = 'ship' | 'articles' | 'crew' | 'stock' | 'provisions' | 'navigation' | 'exploits'
@@ -19,7 +18,7 @@ class Crew {
   starboard: foundry.documents.Actor[]
   larboard: foundry.documents.Actor[]
   stock: number
-  provisions: ProvisionsData
+  provisions: Provisions
 
   constructor (data?: Partial<CrewData>) {
     this.ship = data?.ship
@@ -34,16 +33,7 @@ class Crew {
     this.starboard = []
     this.larboard = []
     this.stock = data?.stock ?? 0
-
-    if (data?.provisions) {
-      this.provisions = data.provisions
-    } else {
-      const defs = loadProvisions()
-      this.provisions = {}
-      for (const key in defs) {
-        this.provisions[key] = { store: 0, rationing: 1, skip: false }
-      }
-    }
+    this.provisions = new Provisions(data?.provisions, this)
 
     if (data?.specialists) {
       for (const key in data.specialists) {
@@ -241,7 +231,7 @@ class Crew {
       starboard: this.starboard.map(actor => actor.uuid).filter(uuid => uuid !== null),
       larboard: this.larboard.map(actor => actor.uuid).filter(uuid => uuid !== null),
       stock: this.stock,
-      provisions: this.provisions
+      provisions: this.provisions.toObject()
     }
 
     if (this.ship?.uuid) obj.ship = this.ship.uuid
