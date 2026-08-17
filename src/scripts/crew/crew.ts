@@ -96,7 +96,7 @@ class Crew {
     const iterable = [...specialists, ...this.starboard, ...this.larboard]
       .map(actor => [actor.uuid, actor] as [string, foundry.documents.Actor])
     const actors = new Map<string, foundry.documents.Actor>(iterable)
-    return Array.from(actors.values())
+    return actors.values().toArray()
   }
 
   get count (): number {
@@ -104,7 +104,7 @@ class Crew {
   }
 
   get shares (): Record<string, number> {
-    const specs = Array.from(this.specialists.values())
+    const specs = this.specialists.values().toArray()
     const uuids = this.uuids
     const record: Record<string, number> = { total: 0 }
 
@@ -258,7 +258,7 @@ class Crew {
   protected mapSpecializationsToUUIDs (keys?: string[]): string[] {
     const specializations = keys && keys.length > 0
       ? keys.map(key => this.specialists.get(key))
-      : Array.from(this.specialists.values())
+      : this.specialists.values().toArray()
     return specializations
       .filter(spec => spec !== undefined)
       .map(({ actor }) => actor)
