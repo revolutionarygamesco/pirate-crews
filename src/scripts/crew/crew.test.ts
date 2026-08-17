@@ -115,6 +115,17 @@ describe('Crew', () => {
       })
     })
 
+    describe('uuids', () => {
+      it('returns UUIDs for all crew members', () => {
+        expect(crew.uuids).toEqual([
+          crew.specialists.get('captain')?.actor,
+          crew.specialists.get('quartermaster')?.actor,
+          crew.starboard[0].uuid,
+          crew.larboard[0].uuid
+        ])
+      })
+    })
+
     describe('all', () => {
       it('returns all crew members', () => {
         expect(crew.all.map(actor => actor.name)).toEqual([

@@ -83,6 +83,14 @@ class Crew {
       : this[off]
   }
 
+  get uuids (): string[] {
+    return [...new Set([
+      ...this.mapSpecializationsToUUIDs(),
+      ...this.starboard.map(actor => actor.uuid).filter(uuid => uuid !== null),
+      ...this.larboard.map(actor => actor.uuid).filter(uuid => uuid !== null)
+    ])]
+  }
+
   get all (): foundry.documents.Actor[] {
     const specialists = this.mapSpecializationsToActors()
     const iterable = [...specialists, ...this.starboard, ...this.larboard]
@@ -219,7 +227,7 @@ class Crew {
     return set.getCurrent(game.time.worldTime)
   }
 
-  protected mapSpecializationsToActors (keys?: string[]): foundry.documents.Actor[] {
+  protected mapSpecializationsToUUIDs (keys?: string[]): string[] {
     const specializations = keys && keys.length > 0
       ? keys.map(key => this.specialists.get(key))
       : Array.from(this.specialists.values())
@@ -227,6 +235,10 @@ class Crew {
       .filter(spec => spec !== undefined)
       .map(({ actor }) => actor)
       .filter(uuid => uuid !== undefined)
+  }
+
+  protected mapSpecializationsToActors (keys?: string[]): foundry.documents.Actor[] {
+    return this.mapSpecializationsToUUIDs(keys)
       .map(uuid => game.actors.get(getID(uuid)))
       .filter(actor => actor !== undefined)
   }
