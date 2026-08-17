@@ -13,6 +13,7 @@ describe('isCrewData', () => {
       specialists: {},
       starboard: [],
       larboard: [],
+      stock: 0,
       provisions: {}
     })).toBe(true)
   })

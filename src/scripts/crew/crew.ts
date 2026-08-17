@@ -18,6 +18,7 @@ class Crew {
   specialists: Map<string, Specialization>
   starboard: foundry.documents.Actor[]
   larboard: foundry.documents.Actor[]
+  stock: number
   provisions: ProvisionsData
 
   constructor (data?: Partial<CrewData>) {
@@ -32,6 +33,7 @@ class Crew {
     this.specialists = new Map<string, Specialization>()
     this.starboard = []
     this.larboard = []
+    this.stock = data?.stock ?? 0
 
     if (data?.provisions) {
       this.provisions = data.provisions
@@ -201,6 +203,7 @@ class Crew {
       specialists: Object.fromEntries(this.specialists),
       starboard: this.starboard.map(actor => actor.uuid).filter(uuid => uuid !== null),
       larboard: this.larboard.map(actor => actor.uuid).filter(uuid => uuid !== null),
+      stock: this.stock,
       provisions: this.provisions
     }
 
