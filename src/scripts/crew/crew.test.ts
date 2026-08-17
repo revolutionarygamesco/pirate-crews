@@ -253,6 +253,21 @@ describe('Crew', () => {
       })
     })
 
+    describe('getShares', () => {
+      it('returns a record of how many shares each member of the crew has', () => {
+        const actual = crew.getShares()
+        expect(actual[crew.specialists.get('captain')?.actor!]).toBe(2)
+        expect(actual[crew.specialists.get('quartermaster')?.actor!]).toBe(2)
+        expect(actual[crew.starboard[0].uuid!]).toBe(1)
+        expect(actual[crew.larboard[0].uuid!]).toBe(1)
+      })
+
+      it('returns the total number of shares', () => {
+        const actual = crew.getShares()
+        expect(actual.total).toBe(6)
+      })
+    })
+
     describe('canEdit', () => {
       let captain: foundry.documents.Actor
       let quartermaster: foundry.documents.Actor

@@ -185,6 +185,21 @@ class Crew {
     this[bigger].push(actor)
   }
 
+  getShares (): Record<string, number> {
+    const specs = Array.from(this.specialists.values())
+    const uuids = this.uuids
+    const record: Record<string, number> = { total: 0 }
+
+    for (const uuid of uuids) {
+      record[uuid] = 1
+      for (const {  actor, shares } of specs) {
+        if (actor === uuid && shares && shares > record[uuid]) record[uuid] = shares
+      }
+      record.total += record[uuid]
+    }
+    return record
+  }
+
   canEdit (
     permission: Permission
   ): boolean {
