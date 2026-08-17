@@ -10,7 +10,7 @@ import loadSpecializationDefinitions from './foundry/load.ts'
 import loadProvisions from '../provisions/foundry/load.ts'
 import loadWatches from '../time/foundry/load.ts'
 
-export type Permission = 'ship' | 'articles' | 'crew' | 'provisions' | 'navigation' | 'exploits'
+export type Permission = 'ship' | 'articles' | 'crew' | 'stock' | 'provisions' | 'navigation' | 'exploits'
 
 class Crew {
   ship?: foundry.documents.Actor | foundry.documents.Item
@@ -190,6 +190,7 @@ class Crew {
       ship: isCaptain,
       articles: false,
       crew: isCaptain || isQuartermaster,
+      stock: isCaptain || isQuartermaster,
       provisions: isCaptain || isQuartermaster,
       navigation: isCaptain || isMaster,
       exploits: isCaptain

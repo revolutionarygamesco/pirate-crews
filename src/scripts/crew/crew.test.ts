@@ -265,6 +265,7 @@ describe('Crew', () => {
         ['the ship', 'ship'],
         ['the articles of agreement', 'articles'],
         ['crew assignments', 'crew'],
+        ['the common stock', 'stock'],
         ['provisions', 'provisions'],
         ['the ship’s course', 'navigation'],
         ['the captain’s exploits', 'exploits']
@@ -277,6 +278,7 @@ describe('Crew', () => {
         ['grants', 'the ship', 'ship'],
         ['denies', 'the articles of agreement', 'articles'],
         ['grants', 'crew assignments', 'crew'],
+        ['grants', 'the common stock', 'stock'],
         ['grants', 'provisions', 'provisions'],
         ['grants', 'the ship’s course', 'navigation'],
         ['grants', 'the captain’s exploits', 'exploits']
@@ -289,6 +291,7 @@ describe('Crew', () => {
         ['denies', 'the ship', 'ship'],
         ['denies', 'the articles of agreement', 'articles'],
         ['grants', 'crew assignments', 'crew'],
+        ['grants', 'the common stock', 'stock'],
         ['grants', 'provisions', 'provisions'],
         ['denies', 'the ship’s course', 'navigation'],
         ['denies', 'the captain’s exploits', 'exploits']
@@ -301,6 +304,7 @@ describe('Crew', () => {
         ['denies', 'the ship', 'ship'],
         ['denies', 'the articles of agreement', 'articles'],
         ['denies', 'crew assignments', 'crew'],
+        ['denies', 'the common stock', 'stock'],
         ['denies', 'provisions', 'provisions'],
         ['grants', 'the ship’s course', 'navigation'],
         ['denies', 'the captain’s exploits', 'exploits']
@@ -313,6 +317,7 @@ describe('Crew', () => {
         ['denies', 'the ship', 'ship'],
         ['denies', 'the articles of agreement', 'articles'],
         ['denies', 'crew assignments', 'crew'],
+        ['denies', 'the common stock', 'stock'],
         ['denies', 'provisions', 'provisions'],
         ['denies', 'the ship’s course', 'navigation'],
         ['denies', 'the captain’s exploits', 'exploits']
