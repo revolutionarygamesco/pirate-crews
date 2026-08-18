@@ -1,4 +1,6 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { mockHooks } from '@revolutionarygamesco/common-foundryvtt/mocks'
+import { MODULE_ID } from '../settings.ts'
 import setupRanger from '../ranger.ts'
 import Crew from './crew.ts'
 import Purser from './purser.ts'
@@ -9,6 +11,10 @@ describe('Purser', () => {
   beforeEach(() => {
     const { crew: data } = setupRanger()
     crew = new Crew(data)
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
   })
 
   describe('constructor', () => {
@@ -50,6 +56,46 @@ describe('Purser', () => {
           [crew.larboard[0].uuid!]: 83, // Crew member Mary Read
           total: 166 + 166 + 83 + 83
         })
+      })
+    })
+
+    describe('payout', () => {
+      let purser: Purser
+      let actor: foundry.documents.Actor
+      let hooks: ReturnType<typeof mockHooks>
+
+      beforeEach(() => {
+        hooks = mockHooks()
+
+        const data = setupRanger()
+        actor = data.actor
+        actor.update = vi.fn(async () => actor)
+
+        data.crew.stock = 500
+        data.crew.actor = actor.uuid!
+        crew = new Crew(data.crew)
+        crew.canEdit = vi.fn(() => true)
+
+        purser = new Purser(crew)
+      })
+
+      it('returns early if you don’t have permission', async () => {
+        crew.canEdit = vi.fn(() => false)
+        await purser.payout(345)
+        expect(actor.update).not.toHaveBeenCalled()
+        expect(hooks.callAll).not.toHaveBeenCalled()
+      })
+
+      it('adjusts the stock by the amount paid out', async () => {
+        const { total } = purser.estimate(345)
+        await purser.payout(345)
+        expect(actor.update).toHaveBeenCalledWith({ 'system.stock': 500 - total })
+      })
+
+      it('calls payout hooks', async () => {
+        const ledger = purser.estimate(345)
+        await purser.payout(345)
+        expect(hooks.callAll).toHaveBeenCalledWith(`${MODULE_ID}.payout`, ledger)
       })
     })
   })

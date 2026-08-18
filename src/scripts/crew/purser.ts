@@ -1,3 +1,6 @@
+import { getID } from '@revolutionarygamesco/common-foundryvtt'
+import { MODULE_ID } from '../settings.ts'
+import { isCrewData } from './types/data.ts'
 import type Crew from './crew.ts'
 
 class Purser {
@@ -20,6 +23,16 @@ class Purser {
     }
 
     return ledger
+  }
+
+  async payout (target: number): Promise<void> {
+    if (!this.crew.canEdit('stock')) return
+    const actor = game.actors.get(getID(this.crew.actor ?? ''))
+    if (!isCrewData(actor?.system)) return
+
+    const ledger = this.estimate(target)
+    await actor.update({ 'system.stock': actor.system.stock - ledger.total })
+    Hooks.callAll(`${MODULE_ID}.payout`, ledger)
   }
 }
 
