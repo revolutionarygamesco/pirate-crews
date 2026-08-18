@@ -3,6 +3,7 @@ import { isSpecializations, type Specializations } from './specializations.ts'
 import { isProvisionsData, createProvisionsData, type ProvisionsData } from '../../provisions/types/provisions.ts'
 
 export interface CrewData {
+  actor?: string
   ship?: string
   articles?: string
   specialists: Specializations
@@ -18,6 +19,7 @@ export const isCrewData = (
   const obj = getObjectRecord(candidate)
   if (!obj) return false
   return [
+    isOptionalString(obj.actor),
     isOptionalString(obj.ship),
     isOptionalString(obj.articles),
     isSpecializations(obj.specialists),

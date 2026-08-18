@@ -34,6 +34,18 @@ describe('Crew', () => {
       expect(new Crew()).toBeInstanceOf(Crew)
     })
 
+    it('can set the actor from an Actor document', () => {
+      const { actor } = setupRanger('Actor')
+      const actual = new Crew(undefined, actor)
+      expect(actual.actor).toBe(actor.uuid)
+    })
+
+    it('can set the actor from a UUID string', () => {
+      const actor = `Actor.${generateID()}`
+      const actual = new Crew({ actor })
+      expect(actual.actor).toBe(actor)
+    })
+
     it('loads the ship (as an actor)', () => {
       const { crew: data } = setupRanger('Actor')
       const crew = new Crew(data)

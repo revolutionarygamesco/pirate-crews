@@ -12,6 +12,7 @@ import loadWatches from '../time/foundry/load.ts'
 export type Permission = 'ship' | 'articles' | 'crew' | 'stock' | 'provisions' | 'navigation' | 'exploits'
 
 class Crew {
+  actor?: string
   ship?: foundry.documents.Actor | foundry.documents.Item
   articles?: foundry.documents.JournalEntry
   specialists: Map<string, Specialization>
@@ -20,7 +21,10 @@ class Crew {
   stock: number
   provisions: Provisions
 
-  constructor (data?: Partial<CrewData>) {
+  constructor (data?: Partial<CrewData>, actor?: foundry.documents.Actor) {
+    const a = data?.actor ?? actor?.uuid
+    if (a) this.actor = a
+
     this.ship = data?.ship
       ? data.ship.startsWith('Actor')
         ? game.actors.get(getID(data.ship))
@@ -234,6 +238,7 @@ class Crew {
       provisions: this.provisions.toObject()
     }
 
+    if (this.actor) obj.actor = this.actor
     if (this.ship?.uuid) obj.ship = this.ship.uuid
     if (this.articles?.uuid) obj.articles = this.articles.uuid
 
