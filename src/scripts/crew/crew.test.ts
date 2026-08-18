@@ -6,6 +6,7 @@ import { isCrewData } from './types/data.ts'
 import { createSpecializationDefinitions } from './types/definitions.ts'
 import WatchSet from '../time/set.ts'
 import Provisions from '../provisions/provisions.ts'
+import Purser from './purser.ts'
 import Crew, { type Permission } from './crew.ts'
 
 const worldTimeMock = vi.fn()
@@ -44,6 +45,11 @@ describe('Crew', () => {
       const actor = `Actor.${generateID()}`
       const actual = new Crew({ actor })
       expect(actual.actor).toBe(actor)
+    })
+
+    it('creates a purser', () => {
+      const actual = new Crew()
+      expect(actual.purser).toBeInstanceOf(Purser)
     })
 
     it('loads the ship (as an actor)', () => {

@@ -5,6 +5,7 @@ import { type Specialization } from './types/specialization.ts'
 import { type WatchInstance } from '../time/types/instance.ts'
 import { isWatchTeam, type WatchTeam } from './types/team.ts'
 import Provisions from '../provisions/provisions.ts'
+import Purser from './purser.ts'
 import getOtherTeam from './methods/other-team.ts'
 import loadSpecializationDefinitions from './foundry/load.ts'
 import loadWatches from '../time/foundry/load.ts'
@@ -20,6 +21,7 @@ class Crew {
   larboard: foundry.documents.Actor[]
   stock: number
   provisions: Provisions
+  purser: Purser
 
   constructor (data?: Partial<CrewData>, actor?: foundry.documents.Actor) {
     const a = data?.actor ?? actor?.uuid
@@ -38,6 +40,7 @@ class Crew {
     this.larboard = []
     this.stock = data?.stock ?? 0
     this.provisions = new Provisions(data?.provisions, this)
+    this.purser = new Purser(this)
 
     if (data?.specialists) {
       for (const key in data.specialists) {
